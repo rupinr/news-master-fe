@@ -12,7 +12,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { getSites, updatePreference, getSubscription } from './service/service'
 import { useLocation, useSearchParams } from 'react-router-dom'
-
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 const ScheduleSelector = () => {
 
@@ -49,7 +50,6 @@ const ScheduleSelector = () => {
                 label: source,
                 value: source,
             }));
-            console.log("esixx", existingSites)
             setDefaultOptions(existingSites)
         }
         fetchExistingData()
@@ -108,63 +108,64 @@ const ScheduleSelector = () => {
 
             sites: options.map((item) => item.value)
         }
-        console.log('Selected Days:', data)
         updatePreference(data, token!!)
-        // You can send this data to your backend here
     }
 
     return (
-        <Box>
-            <Typography>Thank you for subscribing!
-
-                To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning digest to start your day, an afternoon update, or an evening recap, we’ve got you covered.</Typography>
-
-            <Typography variant="h6" sx={{ mb: 2 }}>
-                Select Days of the Week:
-            </Typography>
-            {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
-                <FormControlLabel
-                    key={day}
-                    control={<Checkbox value={day} checked={days.includes(day)} onChange={handleDayChange} />}
-                    label={day}
-                />
-            ))}
-
-            <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
-                Select Time Slot:
-            </Typography>
-            <RadioGroup value={timeSlot} onChange={handleTimeSlotChange}>
-                <FormControlLabel value="Morning" control={<Radio />} label="Morning" />
-                <FormControlLabel value="Afternoon" control={<Radio />} label="Afternoon" />
-                <FormControlLabel value="Evening" control={<Radio />} label="Evening" />
-            </RadioGroup>
-            <Stack spacing={3} sx={{ width: 500 }}>
-
-                <Autocomplete
-                    multiple
-                    id="tags-outlined"
-                    options={options}
-                    value={defaultOptions}
-                    onChange={(event, newValue) => setDefaultOptions(newValue)}
-                    getOptionLabel={(option) => option.label}
-                    filterSelectedOptions
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label="Sites"
-                            placeholder="Sites"
-                            onChange={handleSites}
+        (
+            <Container maxWidth="md">
+                <Box sx={{ my: 4 }}>
+                    <Typography component="p" sx={{ mb: 2 }}>
+                        Thank you for subscribing! To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning digest to start your day, an afternoon update, or an evening recap, we’ve got you covered.
+                    </Typography>
+                    <Typography variant="h6" sx={{ mb: 2 }}>
+                        Select Days of the Week:
+                    </Typography>
+                    <Grid container spacing={2}>
+                        {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
+                            <Grid item xs={6} sm={4} key={day}>
+                                <FormControlLabel
+                                    control={<Checkbox value={day} checked={days.includes(day)} onChange={handleDayChange} />}
+                                    label={day}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
+                        Select Time Slot:
+                    </Typography>
+                    <RadioGroup value={timeSlot} onChange={handleTimeSlotChange}>
+                        <FormControlLabel value="Morning" control={<Radio />} label="Morning" />
+                        <FormControlLabel value="Afternoon" control={<Radio />} label="Afternoon" />
+                        <FormControlLabel value="Evening" control={<Radio />} label="Evening" />
+                    </RadioGroup>
+                    <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
+                        <Autocomplete
+                            multiple
+                            id="tags-outlined"
+                            options={options}
+                            value={defaultOptions}
+                            onChange={(event, newValue) => setDefaultOptions(newValue)}
+                            getOptionLabel={(option) => option.label}
+                            filterSelectedOptions
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Sites"
+                                    placeholder="Sites"
+                                    onChange={handleSites}
+                                />
+                            )}
                         />
-                    )}
-                />
+                    </Stack>
+                    <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>
+                        Save Preferences
+                    </Button>
+                </Box>
+            </Container>
 
-            </Stack>
-            <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>
-                Save Preferences
-            </Button>
-        </Box>
-
+        )
     )
-}
+};
 
 export default ScheduleSelector
