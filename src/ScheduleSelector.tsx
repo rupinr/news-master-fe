@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import React, { useState } from 'react'
@@ -18,64 +17,53 @@ import DaySelector from './DaySelector';
 
 const ScheduleSelector = () => {
 
-    const defaultDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const [searchParams] = useSearchParams()
     const token = searchParams.get('authToken')
-    const [days, setDays] = useState<string[]>(defaultDays)
     const [timeSlot, setTimeSlot] = useState('Morning')
     const [options, setOptions] = useState<{ label: string, value: string }[]>([])
     const [defaultOptions, setDefaultOptions] = useState<{ label: string, value: string }[]>([])
     const [daySelection, setDaySelection] = useState<{ [key: string]: boolean }>({
-        "monday": true,
-        "tuesday": true,
-        "wednesday": true,
-        "thursday": true,
-        "friday": true,
-        "saturday": true,
-        "sunday": true
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+        saturday: true,
+        sunday: true
     })
 
     const [text, setText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState<{ label: string, value: string }[]>([]);
-    const initialDays = {
-        Sunday: false,
-        Monday: true,
-        Tuesday: false,
-        Wednesday: false,
-        Thursday: true,
-        Friday: false,
-        Saturday: true,
+
+
+    const handleDayChangeFor = (updatedDays: any) => {
+        setDaySelection(updatedDays);
     };
+
+    const fetchOptions = async () => {
+        const data = await getSites()
+        const destinations: any[] = data.map((source: any) => ({
+            label: source.url,
+            value: source.url,
+        }));
+        setOptions(destinations)
+    }
+    const fetchExistingData = async () => {
+        const subscription = await getSubscription(token!!)
+        const existingSites: any[] = subscription.sites.map((source: any) => ({
+            label: source,
+            value: source,
+        }));
+        setDefaultOptions(existingSites)
+        setDaySelection(subscription.subscriptionSchedule.dailyFrequency)
+    }
 
 
     useEffect(() => {
-        const fetchOptions = async () => {
-            const data = await getSites()
-            const destinations: any[] = data.map((source: any) => ({
-                label: source.url,
-                value: source.url,
-            }));
-            setOptions(destinations)
-        }
+        fetchExistingData()
         fetchOptions()
     }, [])
 
-
-
-    useEffect(() => {
-        const fetchExistingData = async () => {
-            const subscription = await getSubscription(token!!)
-            const existingSites: any[] = subscription.sites.map((source: any) => ({
-                label: source,
-                value: source,
-            }));
-            setDefaultOptions(existingSites)
-            console.log(initialDays)
-            console.log(subscription.subscriptionSchedule.dailyFrequency)
-            setDaySelection(subscription.subscriptionSchedule.dailyFrequency)
-        }
-        fetchExistingData()
-    }, [])
 
     const handleSites = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -86,14 +74,6 @@ const ScheduleSelector = () => {
     };
 
 
-    const handleDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target
-        setDays((prevDays) =>
-            prevDays.includes(value)
-                ? prevDays.filter((day) => day !== value)
-                : [...prevDays, value]
-        )
-    }
     const handleTimeSlotChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTimeSlot(event.target.value)
     }
@@ -102,19 +82,17 @@ const ScheduleSelector = () => {
         const data = {
             subscriptionSchedule: {
                 dailyFrequency: {
-                    monday: days.includes('Monday'),
-                    tuesday: days.includes('Tuesday'),
-                    wednesday: days.includes('Wednesday'),
-                    thursday: days.includes('Thursday'),
-                    friday: days.includes('Friday'),
-                    saturday: days.includes('Saturday'),
-                    sunday: days.includes('Sunday'),
+                    monday: daySelection['monday'],
+                    tuesday: daySelection['tuesday'],
+                    wednesday: daySelection['wednesday'],
+                    thursday: daySelection['thursday'],
+                    friday: daySelection['friday'],
+                    saturday: daySelection['saturday'],
+                    sunday: daySelection['sunday'],
                 },
                 timeSlot: timeSlot,
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             },
-
-
             sites: options.map((item) => item.value)
         }
         updatePreference(data, token!!)
@@ -132,15 +110,7 @@ const ScheduleSelector = () => {
                         Select Days of the Week:
                     </Typography>
                     <Grid container spacing={2}>
-                        <DaySelector initialDays={daySelection} />
-                        {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
-                            <Grid size={{ xs: 6, sm: 4 }} key={day}>
-                                <FormControlLabel
-                                    control={<Checkbox value={day} checked={days.includes(day)} onChange={handleDayChange} />}
-                                    label={day}
-                                />
-                            </Grid>
-                        ))}
+                        <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
                     </Grid>
                     <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
                         Select Time Slot:
