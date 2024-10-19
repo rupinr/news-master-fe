@@ -14,6 +14,7 @@ import { getSites, updatePreference, getSubscription } from './service/service'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
+import DaySelector from './DaySelector';
 
 const ScheduleSelector = () => {
 
@@ -24,9 +25,27 @@ const ScheduleSelector = () => {
     const [timeSlot, setTimeSlot] = useState('Morning')
     const [options, setOptions] = useState<{ label: string, value: string }[]>([])
     const [defaultOptions, setDefaultOptions] = useState<{ label: string, value: string }[]>([])
+    const [daySelection, setDaySelection] = useState<{ [key: string]: boolean }>({
+        "monday": true,
+        "tuesday": true,
+        "wednesday": true,
+        "thursday": true,
+        "friday": true,
+        "saturday": true,
+        "sunday": true
+    })
+
     const [text, setText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState<{ label: string, value: string }[]>([]);
-
+    const initialDays = {
+        Sunday: false,
+        Monday: true,
+        Tuesday: false,
+        Wednesday: false,
+        Thursday: true,
+        Friday: false,
+        Saturday: true,
+    };
 
 
     useEffect(() => {
@@ -51,6 +70,9 @@ const ScheduleSelector = () => {
                 value: source,
             }));
             setDefaultOptions(existingSites)
+            console.log(initialDays)
+            console.log(subscription.subscriptionSchedule.dailyFrequency)
+            setDaySelection(subscription.subscriptionSchedule.dailyFrequency)
         }
         fetchExistingData()
     }, [])
@@ -77,19 +99,6 @@ const ScheduleSelector = () => {
     }
 
     const handleSubmit = () => {
-
-        const subscriptionSchedule = {
-            dailyFrequency: {
-                monday: days.includes('Monday'),
-                tuesday: days.includes('Tuesday'),
-                wednesday: days.includes('Wednesday'),
-                thursday: days.includes('Thursday'),
-                friday: days.includes('Friday'),
-                saturday: days.includes('Saturday'),
-                sunday: days.includes('Sunday'),
-            },
-        }
-
         const data = {
             subscriptionSchedule: {
                 dailyFrequency: {
@@ -115,6 +124,7 @@ const ScheduleSelector = () => {
         (
             <Container maxWidth="md">
                 <Box sx={{ my: 4 }}>
+
                     <Typography component="p" sx={{ mb: 2 }}>
                         Thank you for subscribing! To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning digest to start your day, an afternoon update, or an evening recap, we’ve got you covered.
                     </Typography>
@@ -122,6 +132,7 @@ const ScheduleSelector = () => {
                         Select Days of the Week:
                     </Typography>
                     <Grid container spacing={2}>
+                        <DaySelector initialDays={daySelection} />
                         {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
                             <Grid size={{ xs: 6, sm: 4 }} key={day}>
                                 <FormControlLabel
