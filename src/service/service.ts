@@ -21,6 +21,8 @@ export const getSites = async () => {
     }
 }
 
+
+
 export const updatePreference = async (data: any, token: string) => {
     try {
         const response = await axios.post(`${SERVER_BASE_URL}/subscribe`, data, { headers: { 'Authorization': token } })
@@ -30,3 +32,12 @@ export const updatePreference = async (data: any, token: string) => {
     }
 }
 
+
+export const getSubscription = async (token: string) => {
+    try {
+        const response = await axios.get(`${SERVER_BASE_URL}/subscription`, { headers: { 'Authorization': token } })
+        return response.data
+    } catch (error) {
+        console.error('Error updating data:', error)
+    }
+}

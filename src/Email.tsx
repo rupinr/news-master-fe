@@ -30,22 +30,25 @@ const Email = () => {
                 <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
                     Welcome to your ultimate news hub! Dive into a world of information with our personalized newsletter service, crafted just for you. Subscribe to receive daily updates from your favorite news websites, all curated to match your interests and schedule. Whether it's breaking news, in-depth analysis, or light-hearted features, customize your delivery to stay informed in the way that suits you best. Your news, your way, every day.
                 </Typography>
-                <TextField
-                    autoFocus
-                    required
-                    margin="dense"
-                    id="name"
-                    name="email"
-                    label="Email Address"
-                    type="email"
-                    fullWidth
-                    variant="standard"
-                    value={text}
-                    onChange={handleChange}
-                />
-                <Button variant="contained" endIcon={<SendIcon />} onClick={handleClick}>
-                    Send
-                </Button>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <TextField
+                        autoFocus
+                        required
+                        margin="dense"
+                        id="name"
+                        name="email"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        variant="standard"
+                        value={text}
+                        onChange={handleChange}
+                        sx={{ mr: 2 }}
+                    />
+                    <Button variant="contained" endIcon={<SendIcon />} onClick={handleClick}>
+                        Send
+                    </Button>
+                </Box>
             </Box>
         </Container>
     )

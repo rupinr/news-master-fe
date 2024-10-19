@@ -10,20 +10,23 @@ import { useEffect } from 'react'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { getSites, updatePreference } from './service/service'
+import { getSites, updatePreference, getSubscription } from './service/service'
 import { useLocation, useSearchParams } from 'react-router-dom'
 
 
 const ScheduleSelector = () => {
 
     const defaultDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const [searchParams] = useSearchParams()
+    const token = searchParams.get('authToken')
     const [days, setDays] = useState<string[]>(defaultDays)
     const [timeSlot, setTimeSlot] = useState('Morning')
     const [options, setOptions] = useState<{ label: string, value: string }[]>([])
+    const [defaultOptions, setDefaultOptions] = useState<{ label: string, value: string }[]>([])
     const [text, setText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState<{ label: string, value: string }[]>([]);
-    const [searchParams] = useSearchParams()
-    const token = searchParams.get('authToken')
+
+
 
     useEffect(() => {
         const fetchOptions = async () => {
@@ -35,6 +38,21 @@ const ScheduleSelector = () => {
             setOptions(destinations)
         }
         fetchOptions()
+    }, [])
+
+
+
+    useEffect(() => {
+        const fetchExistingData = async () => {
+            const subscription = await getSubscription(token!!)
+            const existingSites: any[] = subscription.sites.map((source: any) => ({
+                label: source,
+                value: source,
+            }));
+            console.log("esixx", existingSites)
+            setDefaultOptions(existingSites)
+        }
+        fetchExistingData()
     }, [])
 
     const handleSites = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +144,8 @@ const ScheduleSelector = () => {
                     multiple
                     id="tags-outlined"
                     options={options}
+                    value={defaultOptions}
+                    onChange={(event, newValue) => setDefaultOptions(newValue)}
                     getOptionLabel={(option) => option.label}
                     filterSelectedOptions
                     renderInput={(params) => (
@@ -137,7 +157,6 @@ const ScheduleSelector = () => {
                         />
                     )}
                 />
-
 
             </Stack>
             <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>

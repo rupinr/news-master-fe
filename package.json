@@ -14,8 +14,8 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "axios": "^1.7.7",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
