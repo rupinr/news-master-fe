@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import { getSites, updatePreference, getSubscription } from './service/service'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 
 const ScheduleSelector = () => {
 
@@ -123,7 +123,7 @@ const ScheduleSelector = () => {
                     </Typography>
                     <Grid container spacing={2}>
                         {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
-                            <Grid item xs={6} sm={4} key={day}>
+                            <Grid size={{ xs: 6, sm: 4 }} key={day}>
                                 <FormControlLabel
                                     control={<Checkbox value={day} checked={days.includes(day)} onChange={handleDayChange} />}
                                     label={day}
