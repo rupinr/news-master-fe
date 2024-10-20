@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import { useSearchParams } from 'react-router-dom';
-import { getSites, updatePreference, getSubscription } from './service/service';
+import { getSites, updatePreference, getSubscription, SubscriptionData } from './service/service';
 import DaySelector from './DaySelector';
 import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
@@ -47,7 +47,7 @@ const ScheduleSelector = () => {
     const fetchData = async () => {
         if (!token) return;
         const subscription = await getSubscription(token);
-        const existingSites: Option[] = subscription.sites.map((source: string) => ({
+        const existingSites: Option[] = subscription!!.sites.map((source: string) => ({
             label: source,
             value: source,
         }));
@@ -59,8 +59,8 @@ const ScheduleSelector = () => {
         setOptions(options);
         setDefaultOptions(existingSites);
         setSelectedSites(existingSites);
-        setDaySelection(subscription.subscriptionSchedule.dailyFrequency);
-        setTimeSlot(subscription.subscriptionSchedule.timeSlot);
+        setDaySelection(subscription!!.subscriptionSchedule.dailyFrequency);
+        setTimeSlot(subscription!!.subscriptionSchedule.timeSlot);
     };
 
     useEffect(() => {
@@ -68,16 +68,27 @@ const ScheduleSelector = () => {
     }, [token]);
 
     const handleSubmit = () => {
-        const data = {
+
+
+        const subscriptionData: SubscriptionData = {
             confirmed: true,
+            sites: selectedSites.map((item) => item.value),
             subscriptionSchedule: {
-                dailyFrequency: { ...daySelection },
+                dailyFrequency: {
+                    monday: daySelection['monday'],
+                    tuesday: daySelection['tuesday'],
+                    wednesday: daySelection['wednesday'],
+                    thursday: daySelection['thursday'],
+                    friday: daySelection['friday'],
+                    saturday: daySelection['saturday'],
+                    sunday: daySelection['sunday'],
+                },
                 timeSlot: timeSlot,
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            },
-            sites: selectedSites.map((item) => item.value)
+            }
         };
-        updatePreference(data, token!);
+
+        updatePreference(subscriptionData, token!);
         navigate('/congratulations')
     };
 
