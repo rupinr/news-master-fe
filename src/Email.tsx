@@ -29,7 +29,6 @@ const Email = () => {
             })
             navigate('/thank-you')
         }
-
     }
 
     return (

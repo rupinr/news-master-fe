@@ -10,6 +10,7 @@ import { getSites, updatePreference, getSubscription } from './service/service';
 import DaySelector from './DaySelector';
 import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
+import { useNavigate } from 'react-router-dom'
 
 const ScheduleSelector = () => {
     const [searchParams] = useSearchParams();
@@ -31,6 +32,9 @@ const ScheduleSelector = () => {
     const handleDayChangeFor = (updatedDays: { [key: string]: boolean }) => {
         setDaySelection(updatedDays);
     };
+
+    const navigate = useNavigate()
+
 
     const handleTimeSlotChangeFor = (updateTimeSlot: string) => {
         setTimeSlot(updateTimeSlot);
@@ -74,6 +78,7 @@ const ScheduleSelector = () => {
             sites: selectedSites.map((item) => item.value)
         };
         updatePreference(data, token!);
+        navigate('/congratulations')
     };
 
     return (

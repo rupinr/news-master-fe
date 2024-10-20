@@ -27,12 +27,9 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
 
 
     const handleUpdate = (event: any, newValue: Option[]) => {
-
-
         setSelectedOptions(newValue);
+        setAllOptions(allOptions.filter(item => !selectedOptions.includes(item)))
         onSiteChange(newValue);
-        console.log('handleUpdate')
-        console.log('allOptions', allOptions)
     };
 
     return (
