@@ -33,7 +33,7 @@ export const updatePreference = async (data: any, token: string) => {
 }
 
 
-export const getSubscription = async (token: string) => {
+export const getSubscription = async (token: string): Promise<any> => {
     try {
         const response = await axios.get(`${SERVER_BASE_URL}/subscription`, { headers: { 'Authorization': token } })
         return response.data

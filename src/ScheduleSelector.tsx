@@ -57,6 +57,7 @@ const ScheduleSelector = () => {
     const fetchExistingData = async () => {
         const subscription = await getSubscription(token!!)
         let existingSites = []
+        console.log("Sitesss", subscription)
         if (subscription.sites != null) {
             existingSites = subscription.sites.map((source: any) => ({
                 label: source,
@@ -86,6 +87,7 @@ const ScheduleSelector = () => {
 
     const handleSubmit = () => {
         const data = {
+            confirmed: true,
             subscriptionSchedule: {
                 dailyFrequency: {
                     monday: daySelection['monday'],
@@ -100,6 +102,7 @@ const ScheduleSelector = () => {
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             },
             sites: options.map((item) => item.value)
+
         }
         updatePreference(data, token!!)
     }
