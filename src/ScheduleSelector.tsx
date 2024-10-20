@@ -11,6 +11,7 @@ import DaySelector from './DaySelector';
 import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
 import { useNavigate } from 'react-router-dom'
+import SaveIcon from '@mui/icons-material/Save';
 
 const ScheduleSelector = () => {
     const [searchParams] = useSearchParams();
@@ -95,6 +96,7 @@ const ScheduleSelector = () => {
     return (
         <Container maxWidth="md">
             <Box sx={{ my: 4 }}>
+
                 <Typography component="p" sx={{ mb: 2 }}>
                     Thank you for subscribing! To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning digest to start your day, an afternoon update, or an evening recap, we’ve got you covered.
                 </Typography>
@@ -110,11 +112,12 @@ const ScheduleSelector = () => {
                 <Grid container spacing={2}>
                     <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
                         <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
+                        <Button endIcon={<SaveIcon />} variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>
+                            Save Preferences
+                        </Button>
                     </Stack>
                 </Grid>
-                <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>
-                    Save Preferences
-                </Button>
+
             </Box>
         </Container>
     );
