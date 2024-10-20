@@ -1,7 +1,7 @@
 // services/apiService.ts
 import axios from 'axios'
 
-const SERVER_BASE_URL = 'http://localhost:8090'
+const SERVER_BASE_URL = import.meta.env.VITE_BACKEND_URL
 
 export interface SubscriptionSchedule {
     dailyFrequency: {

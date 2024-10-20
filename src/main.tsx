@@ -24,7 +24,7 @@ const RootComponent: React.FC = () => {
   return (
     <ThemeProvider theme={appliedTheme}>
       <CssBaseline />
-      <Box sx={{ position: 'absolute', top: 0, right: 0, p: 2 }}>
+      <Box sx={{ position: 'absolute', top: 0, right: 0, p: 0.5 }}>
         <FormControlLabel
           control={<Switch checked={darkThemeToggle} onChange={switchTheme} name="theme-toggle" />}
           label={darkThemeToggle ? <DarkModeIcon /> : <LightModeIcon />}

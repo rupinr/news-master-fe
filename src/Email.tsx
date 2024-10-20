@@ -45,6 +45,7 @@ const Email = () => {
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12, sm: 8 }}>
                         <TextField
+                            autoComplete="true"
                             autoFocus
                             required
                             margin="dense"
