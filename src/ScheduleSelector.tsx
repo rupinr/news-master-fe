@@ -14,12 +14,13 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import DaySelector from './DaySelector';
+import TimeSlotSelector from './TimeSlotSelector'
 
 const ScheduleSelector = () => {
 
     const [searchParams] = useSearchParams()
     const token = searchParams.get('authToken')
-    const [timeSlot, setTimeSlot] = useState('Morning')
+    const [timeSlot, setTimeSlot] = useState('Monday')
     const [options, setOptions] = useState<{ label: string, value: string }[]>([])
     const [defaultOptions, setDefaultOptions] = useState<{ label: string, value: string }[]>([])
     const [daySelection, setDaySelection] = useState<{ [key: string]: boolean }>({
@@ -40,6 +41,11 @@ const ScheduleSelector = () => {
         setDaySelection(updatedDays);
     };
 
+    const handleTimeSlotChangeFor = (updateTimeSlot: any) => {
+        console.log(updateTimeSlot)
+        setTimeSlot(updateTimeSlot);
+    };
+
     const fetchOptions = async () => {
         const data = await getSites()
         const destinations: any[] = data.map((source: any) => ({
@@ -56,6 +62,7 @@ const ScheduleSelector = () => {
         }));
         setDefaultOptions(existingSites)
         setDaySelection(subscription.subscriptionSchedule.dailyFrequency)
+        setTimeSlot(subscription.subscriptionSchedule.timeSlot)
     }
 
 
@@ -72,11 +79,6 @@ const ScheduleSelector = () => {
             option.label.toLowerCase().includes(value.toLowerCase())
         ));
     };
-
-
-    const handleTimeSlotChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTimeSlot(event.target.value)
-    }
 
     const handleSubmit = () => {
         const data = {
@@ -112,14 +114,9 @@ const ScheduleSelector = () => {
                     <Grid container spacing={2}>
                         <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
                     </Grid>
-                    <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
-                        Select Time Slot:
-                    </Typography>
-                    <RadioGroup value={timeSlot} onChange={handleTimeSlotChange}>
-                        <FormControlLabel value="Morning" control={<Radio />} label="Morning" />
-                        <FormControlLabel value="Afternoon" control={<Radio />} label="Afternoon" />
-                        <FormControlLabel value="Evening" control={<Radio />} label="Evening" />
-                    </RadioGroup>
+                    <Grid container spacing={2}>
+                        <TimeSlotSelector initialTimeSlot={timeSlot} onTimeSlotChange={handleTimeSlotChangeFor} />
+                    </Grid>
                     <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
                         <Autocomplete
                             multiple
