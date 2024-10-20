@@ -23,16 +23,26 @@ export interface SubscriptionData {
     subscriptionSchedule: SubscriptionSchedule;
 }
 
-
-
-export const updateData = async (data: any) => {
-    try {
-        const response = await axios.post(`${SERVER_BASE_URL}/user`, data)
-        return response.data
-    } catch (error) {
-        console.error('Error updating data:', error)
-    }
+export interface CreateUserPayload {
+    email: string;
 }
+
+
+interface ApiResponse<T> {
+    success: boolean;
+    data?: T;
+    error?: string;
+}
+
+export const createUser = async (data: CreateUserPayload): Promise<ApiResponse<any>> => {
+    try {
+        const response = await axios.post<any>(`${SERVER_BASE_URL}/user`, data);
+        return { success: true, data: response.data };
+    } catch (error: any) {
+        console.error('Error creating user:', error);
+        return { success: false, error: error.message };
+    }
+};
 
 export const getSites = async () => {
     try {
@@ -45,14 +55,15 @@ export const getSites = async () => {
 
 
 
-export const updatePreference = async (data: SubscriptionData, token: string) => {
+export const updatePreference = async (data: SubscriptionData, token: string): Promise<ApiResponse<SubscriptionData>> => {
     try {
-        const response = await axios.post(`${SERVER_BASE_URL}/subscribe`, data, { headers: { 'Authorization': token } })
-        return response.data
-    } catch (error) {
-        console.error('Error updating data:', error)
+        const response = await axios.post<SubscriptionData>(`${SERVER_BASE_URL}/subscribe`, data, { headers: { 'Authorization': token } });
+        return { success: true, data: response.data };
+    } catch (error: any) {
+        console.error('Error updating data:', error);
+        return { success: false, error: error.message };
     }
-}
+};
 
 
 export const getSubscription = async (token: string): Promise<SubscriptionData | undefined> => {

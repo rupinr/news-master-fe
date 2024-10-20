@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
-import { updateData } from './service/service'
+import { createUser } from './service/service'
 import { useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -24,10 +24,15 @@ const Email = () => {
 
     const handleClick = () => {
         if (isEmailValid) {
-            updateData({
-                "email": email
-            })
-            navigate('/thank-you')
+            createUser({ "email": email })
+                .then(response => {
+                    if (response.success) {
+                        navigate('/thank-you')
+                    } else {
+                        navigate('/error')
+                    }
+                })
+                .catch(error => console.error('Unexpected error:', error));
         }
     }
 

@@ -47,6 +47,7 @@ const ScheduleSelector = () => {
 
     const fetchData = async () => {
         if (!token) return;
+        sessionStorage.setItem('authToken', token);
         const subscription = await getSubscription(token);
         const existingSites: Option[] = subscription!!.sites.map((source: string) => ({
             label: source,
@@ -65,11 +66,16 @@ const ScheduleSelector = () => {
     };
 
     useEffect(() => {
-        fetchData();
-    }, [token]);
+        if (token) {
+            fetchData();
+            searchParams.delete('authToken'); // Remove token from URL
+            navigate({
+                search: searchParams.toString(),
+            }, { replace: true }); // Use replace to update URL without affecting history
+        }
+    }, [token, searchParams, navigate]);
 
     const handleSubmit = () => {
-
 
         const subscriptionData: SubscriptionData = {
             confirmed: true,
@@ -89,8 +95,16 @@ const ScheduleSelector = () => {
             }
         };
 
-        updatePreference(subscriptionData, token!);
-        navigate('/congratulations')
+
+        updatePreference(subscriptionData, sessionStorage.getItem('authToken')!)
+            .then(response => {
+                if (response.success) {
+                    navigate('/congratulations')
+                } else {
+                    navigate('/error')
+                }
+            })
+            .catch(error => console.error('Unexpected error:', error));
     };
 
     return (
