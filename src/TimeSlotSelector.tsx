@@ -21,7 +21,7 @@ const TimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({ initialTimeSlot, on
         onTimeSlotChange(event.target.value)
     }
 
-    const [timeSlot, setTimeSlot] = useState('')
+    const [timeSlot, setTimeSlot] = useState('Morning')
 
     useEffect(() => {
         setTimeSlot(initialTimeSlot);

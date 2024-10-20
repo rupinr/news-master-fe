@@ -56,10 +56,14 @@ const ScheduleSelector = () => {
     }
     const fetchExistingData = async () => {
         const subscription = await getSubscription(token!!)
-        const existingSites: any[] = subscription.sites.map((source: any) => ({
-            label: source,
-            value: source,
-        }));
+        let existingSites = []
+        if (subscription.sites != null) {
+            existingSites = subscription.sites.map((source: any) => ({
+                label: source,
+                value: source,
+            }));
+        }
+        console.log(subscription)
         setDefaultOptions(existingSites)
         setDaySelection(subscription.subscriptionSchedule.dailyFrequency)
         setTimeSlot(subscription.subscriptionSchedule.timeSlot)
