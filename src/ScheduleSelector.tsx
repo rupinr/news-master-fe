@@ -45,38 +45,36 @@ export const ScheduleSelector = () => {
 
     const handleSiteChange = (updatedSites: Option[]) => {
         setSelectedSites(updatedSites);
-        console.log('updatedSites', updatedSites)
-        console.log('options', options)
-        const filteredItems = options.filter(item =>
-            !updatedSites.some(toRemove =>
-                toRemove.label === item.label && toRemove.value === item.value
-            )
-        );
-        setOptions(filteredItems)
     };
 
     const fetchData = async () => {
         if (!token) return;
         sessionStorage.setItem('authToken', token);
-        let existingSitePreference: Option[]
-        await getSubscription(token).then(response => {
-            existingSitePreference = response.data.sites.map(item => ({
-                label: item,
-                value: item
+
+
+        let allSites: Option[]
+        getSites().then(response => {
+            allSites = response.data.map((item: Site) => ({
+                label: item.name,
+                value: item.url
             }));
-            setDefaultOptions(existingSitePreference);
-            setSelectedSites(existingSitePreference);
-            setDaySelection(response.data.subscriptionSchedule.dailyFrequency);
-            setTimeSlot(response.data.subscriptionSchedule.timeSlot);
         }).then(() => {
-            let allSites: Option[]
-            getSites().then(response => {
-                console.log('all data', response.data)
-                allSites = response.data.map((item: Site) => ({
-                    label: item.name,
-                    value: item.url
+            let existingSitePreference: Option[]
+            getSubscription(token).then(response => {
+                existingSitePreference = response.data.sites.map(item => ({
+                    label: allSites.find((site: Option) => site.value === item)?.label!!,
+                    value: item
                 }));
-                setOptions(allSites);
+                const filteredItems = allSites.filter(item =>
+                    !existingSitePreference.some(toRemove =>
+                        toRemove.label === item.label && toRemove.value === item.value
+                    )
+                );
+                setOptions(filteredItems);
+                setDefaultOptions(existingSitePreference);
+                setSelectedSites(existingSitePreference);
+                setDaySelection(response.data.subscriptionSchedule.dailyFrequency);
+                setTimeSlot(response.data.subscriptionSchedule.timeSlot);
             })
         })
     };
@@ -89,13 +87,7 @@ export const ScheduleSelector = () => {
                 search: searchParams.toString(),
             }, { replace: true }); // Use replace to update URL without affecting history
         }
-        const filteredItems = options.filter(item =>
-            !defaultOptions.some(toRemove =>
-                toRemove.label === item.label && toRemove.value === item.value
-            )
-        );
-        setOptions(filteredItems)
-    }, [token, searchParams, navigate, options, defaultOptions]);
+    }, [token, searchParams, navigate]);
 
     const handleSubmit = () => {
 

@@ -19,16 +19,12 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
 
     useEffect(() => {
         setAllOptions(options);
-    }, [options]);
-
-    useEffect(() => {
         setSelectedOptions(defaultOptions);
     }, [defaultOptions]);
 
 
     const handleUpdate = (event: any, newValue: Option[]) => {
         setSelectedOptions(newValue);
-        setAllOptions(allOptions.filter(item => selectedOptions.includes(item)))
         onSiteChange(newValue);
     };
 
