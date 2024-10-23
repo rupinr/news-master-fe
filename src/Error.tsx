@@ -14,7 +14,10 @@ export const Error = () => {
                     We apologize for the inconvenience, but it seems there was an error processing your request.
                 </Typography>
                 <Typography component="p">
-                    Please try again later. If the issue persists, contact our support team for assistance.
+                    Please make sure you clicked the right link. If clicking doesn't work, try copying and pasting the URL from the email.
+                </Typography>
+                <Typography component="p">
+                    If the issue persists, contact our support team for assistance.
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                     <Link href="/" variant="body2" color="primary">

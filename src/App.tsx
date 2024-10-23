@@ -1,21 +1,37 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import ScheduleSelector from './ScheduleSelector';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ScheduleSelector } from './ScheduleSelector';
 import { ThankYou } from './ThankYou';
-import { Congratulations } from './Congratulations';
+import Box from '@mui/material/Box';
 import { Error } from './Error';
 import Email from './Email';
+import Header from './Header';
+import Footer from './Footer';
+import ThemeToggle from './ThemeToggle';
+import React from 'react';
 
-export default function App() {
+interface AppProps {
+  handleThemeToggle: (isDarkTheme: boolean) => void;
+  darkTheme: boolean;
+}
+
+const App: React.FC<AppProps> = ({ handleThemeToggle, darkTheme }) => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Email />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="/preferences" element={<ScheduleSelector />} />
-        <Route path="/congratulations" element={<Congratulations />} />
-        <Route path="/error" element={<Error />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Header />
+        <ThemeToggle onToggle={handleThemeToggle} />
+        <Box component="main" sx={{ flexGrow: 1, pt: 8 }}>
+          <Routes>
+            <Route path="/" element={<Email />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/preferences" element={<ScheduleSelector />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </Box>
+        <Footer />
+      </Box>
     </Router>
   );
-}
+};
+
+export default App;

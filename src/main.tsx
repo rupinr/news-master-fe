@@ -1,36 +1,21 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, useMediaQuery } from '@mui/material';
+import { CssBaseline, Theme } from '@mui/material';
 import App from './App';
 import { lightTheme, darkTheme } from './theme';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 const RootComponent: React.FC = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [darkThemeToggle, setDarkThemeToggle] = useState<boolean>(prefersDarkMode);
+  const [theme, setTheme] = React.useState<Theme>(lightTheme);
 
-  const switchTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDarkThemeToggle(event.target.checked);
+  const handleThemeToggle = (isDarkTheme: boolean) => {
+    setTheme(isDarkTheme ? darkTheme : lightTheme);
   };
 
-  const appliedTheme = darkThemeToggle ? darkTheme : lightTheme;
-
   return (
-    <ThemeProvider theme={appliedTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ position: 'absolute', top: 0, right: 0, p: 0.5 }}>
-        <FormControlLabel
-          control={<Switch checked={darkThemeToggle} onChange={switchTheme} name="theme-toggle" />}
-          label={darkThemeToggle ? <DarkModeIcon /> : <LightModeIcon />}
-        />
-      </Box>
-      <App />
+      <App handleThemeToggle={handleThemeToggle} darkTheme={theme === darkTheme} />
     </ThemeProvider>
   );
 };

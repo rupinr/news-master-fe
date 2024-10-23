@@ -5,11 +5,12 @@ import { useEffect } from 'react'
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { DailyFrequency } from './service/service';
 
 
 interface DaySelectorProps {
-    initialDays: { [key: string]: boolean };
-    onDayChange: (updatedDays: { [key: string]: boolean }) => void;
+    initialDays: DailyFrequency;
+    onDayChange: (updatedDays: DailyFrequency) => void;
 }
 
 const capitalize = (str: string) => str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
@@ -25,7 +26,7 @@ const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) =
             ...prevDays,
             [value]: checked,
         }));
-        const newDays = { ...initialDays, [value]: !initialDays[value] };
+        const newDays = { ...initialDays, [value]: initialDays };
         onDayChange(newDays);
     };
 

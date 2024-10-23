@@ -1,34 +1,34 @@
 import { createTheme, Theme } from '@mui/material/styles';
 
-const lightTheme: Theme = createTheme({
+export const lightTheme: Theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0288D1',
+      main: '#4A90E2', // Soft blue
     },
     secondary: {
-      main: '#D32F2F',
+      main: '#50E3C2', // Mint green
     },
     background: {
-      default: '#FAFAFA',
+      default: '#F7F8FA', // Light gray
       paper: '#FFFFFF',
     },
     text: {
-      primary: '#212121',
-      secondary: '#757575',
+      primary: '#333333', // Dark gray
+      secondary: '#757575', // Medium gray
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Roboto, sans-serif',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#0277BD',
+      color: '#4A90E2',
     },
     h6: {
       fontSize: '1.25rem',
       fontWeight: 500,
-      color: '#212121',
+      color: '#333333',
     },
     body1: {
       fontSize: '1rem',
@@ -43,10 +43,10 @@ const lightTheme: Theme = createTheme({
           textTransform: 'none',
         },
         containedPrimary: {
-          backgroundColor: '#0288D1',
+          backgroundColor: '#4A90E2',
           color: '#FFFFFF',
           '&:hover': {
-            backgroundColor: '#0277BD',
+            backgroundColor: '#4185D2',
           },
         },
       },
@@ -54,35 +54,36 @@ const lightTheme: Theme = createTheme({
   },
 });
 
-const darkTheme: Theme = createTheme({
+
+export const darkTheme: Theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#BB86FC',
+      main: '#82B1FF', // Soft light blue
     },
     secondary: {
-      main: '#03DAC6',
+      main: '#B9F6CA', // Mint green
     },
     background: {
-      default: '#121212',
-      paper: '#1E1E1E',
+      default: '#121212', // Almost black
+      paper: '#1E1E1E', // Dark gray
     },
     text: {
-      primary: '#E0E0E0',
-      secondary: '#B0B0B0',
+      primary: '#FFFFFF', // White
+      secondary: '#B0B0B0', // Light gray
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Roboto, sans-serif',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#BB86FC',
+      color: '#82B1FF',
     },
     h6: {
       fontSize: '1.25rem',
       fontWeight: 500,
-      color: '#E0E0E0',
+      color: '#FFFFFF',
     },
     body1: {
       fontSize: '1rem',
@@ -97,10 +98,10 @@ const darkTheme: Theme = createTheme({
           textTransform: 'none',
         },
         containedPrimary: {
-          backgroundColor: '#BB86FC',
+          backgroundColor: '#82B1FF',
           color: '#000000',
           '&:hover': {
-            backgroundColor: '#3700B3',
+            backgroundColor: '#6FA8E5',
           },
         },
       },
@@ -108,4 +109,4 @@ const darkTheme: Theme = createTheme({
   },
 });
 
-export { lightTheme, darkTheme };
+

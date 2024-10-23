@@ -1,8 +1,9 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-export const ThankYou = () => {
+import { useNavigate } from 'react-router-dom';
 
+export const ThankYou = () => {
 
     return (
         <Container maxWidth="sm">

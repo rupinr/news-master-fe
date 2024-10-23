@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -6,21 +6,23 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import { useSearchParams } from 'react-router-dom';
-import { getSites, updatePreference, getSubscription, SubscriptionData } from './service/service';
+import { getSites, updatePreference, getSubscription, SubscriptionData, DailyFrequency, Site } from './service/service';
 import DaySelector from './DaySelector';
 import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
 import { useNavigate } from 'react-router-dom'
 import SaveIcon from '@mui/icons-material/Save';
+import { UnknownErrorAlert } from './Alerts'
 
-const ScheduleSelector = () => {
+export const ScheduleSelector = () => {
     const [searchParams] = useSearchParams();
     const token = searchParams.get('authToken');
     const [timeSlot, setTimeSlot] = useState('');
+    const [error, setError] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
     const [defaultOptions, setDefaultOptions] = useState<Option[]>([]);
     const [selectedSites, setSelectedSites] = useState<Option[]>([]);
-    const [daySelection, setDaySelection] = useState<{ [key: string]: boolean }>({
+    const [daySelection, setDaySelection] = useState<DailyFrequency>({
         monday: true,
         tuesday: true,
         wednesday: true,
@@ -30,7 +32,7 @@ const ScheduleSelector = () => {
         sunday: true
     });
 
-    const handleDayChangeFor = (updatedDays: { [key: string]: boolean }) => {
+    const handleDayChangeFor = (updatedDays: DailyFrequency) => {
         setDaySelection(updatedDays);
     };
 
@@ -43,26 +45,40 @@ const ScheduleSelector = () => {
 
     const handleSiteChange = (updatedSites: Option[]) => {
         setSelectedSites(updatedSites);
+        console.log('updatedSites', updatedSites)
+        console.log('options', options)
+        const filteredItems = options.filter(item =>
+            !updatedSites.some(toRemove =>
+                toRemove.label === item.label && toRemove.value === item.value
+            )
+        );
+        setOptions(filteredItems)
     };
 
     const fetchData = async () => {
         if (!token) return;
         sessionStorage.setItem('authToken', token);
-        const subscription = await getSubscription(token);
-        const existingSites: Option[] = subscription!!.sites.map((source: string) => ({
-            label: source,
-            value: source,
-        }));
-        const sites = await getSites();
-        const options: Option[] = sites.map((item: { url: string }) => ({
-            label: item.url,
-            value: item.url
-        }));
-        setOptions(options);
-        setDefaultOptions(existingSites);
-        setSelectedSites(existingSites);
-        setDaySelection(subscription!!.subscriptionSchedule.dailyFrequency);
-        setTimeSlot(subscription!!.subscriptionSchedule.timeSlot);
+        let existingSitePreference: Option[]
+        await getSubscription(token).then(response => {
+            existingSitePreference = response.data.sites.map(item => ({
+                label: item,
+                value: item
+            }));
+            setDefaultOptions(existingSitePreference);
+            setSelectedSites(existingSitePreference);
+            setDaySelection(response.data.subscriptionSchedule.dailyFrequency);
+            setTimeSlot(response.data.subscriptionSchedule.timeSlot);
+        }).then(() => {
+            let allSites: Option[]
+            getSites().then(response => {
+                console.log('all data', response.data)
+                allSites = response.data.map((item: Site) => ({
+                    label: item.name,
+                    value: item.url
+                }));
+                setOptions(allSites);
+            })
+        })
     };
 
     useEffect(() => {
@@ -73,13 +89,19 @@ const ScheduleSelector = () => {
                 search: searchParams.toString(),
             }, { replace: true }); // Use replace to update URL without affecting history
         }
-    }, [token, searchParams, navigate]);
+        const filteredItems = options.filter(item =>
+            !defaultOptions.some(toRemove =>
+                toRemove.label === item.label && toRemove.value === item.value
+            )
+        );
+        setOptions(filteredItems)
+    }, [token, searchParams, navigate, options, defaultOptions]);
 
     const handleSubmit = () => {
 
         const subscriptionData: SubscriptionData = {
             confirmed: true,
-            sites: selectedSites.map((item) => item.value),
+            sites: selectedSites!!.map((item) => item.value),
             subscriptionSchedule: {
                 dailyFrequency: {
                     monday: daySelection['monday'],
@@ -99,9 +121,10 @@ const ScheduleSelector = () => {
         updatePreference(subscriptionData, sessionStorage.getItem('authToken')!)
             .then(response => {
                 if (response.success) {
-                    navigate('/congratulations')
+                    setError(false)
+                    navigate('/thank-you')
                 } else {
-                    navigate('/error')
+                    setError(true)
                 }
             })
             .catch(error => console.error('Unexpected error:', error));
@@ -109,8 +132,8 @@ const ScheduleSelector = () => {
 
     return (
         <Container maxWidth="md">
-            <Box sx={{ my: 4 }}>
 
+            <Box sx={{ my: 4 }}>
                 <Typography component="p" sx={{ mb: 2 }}>
                     Thank you for subscribing! To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning digest to start your day, an afternoon update, or an evening recap, we’ve got you covered.
                 </Typography>
@@ -131,8 +154,12 @@ const ScheduleSelector = () => {
                         </Button>
                     </Stack>
                 </Grid>
-
             </Box>
+
+            <Box sx={{ my: 4 }}>
+                {(error) ? <UnknownErrorAlert /> : null}
+            </Box>
+
         </Container>
     );
 };
