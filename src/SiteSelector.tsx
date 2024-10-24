@@ -19,25 +19,16 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
     const [allOptions, setAllOptions] = useState<Option[]>(options);
 
     useEffect(() => {
-        console.log('options', options)
         setAllOptions(options);
         setSelectedOptions(defaultOptions);
     }, [defaultOptions, options]);
 
-
-
     const handleUpdate = (event: any, newValue: Option[]) => {
-        console.log('selectedOptions', selectedOptions)
-        console.log('allOptions', allOptions)
-        console.log('newValue', newValue)
         const deletedOne = selectedOptions.filter(item => !newValue.includes(item));
         if (deletedOne.length == 1) {
             console.log('deletedOne', deletedOne[0].label)
             setAllOptions([...allOptions, deletedOne[0]])
         }
-
-        console.log('allOptions22', allOptions)
-
         setSelectedOptions(newValue);
         onSiteChange(newValue);
     };
@@ -52,6 +43,7 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
                 id="tags-outlined"
                 options={allOptions}
                 value={selectedOptions}
+                color='secondary'
                 getOptionLabel={(option) => option.label}
                 onChange={handleUpdate}
                 filterSelectedOptions

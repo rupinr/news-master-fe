@@ -52,7 +52,6 @@ export const Preference = () => {
         if (!token) return;
         sessionStorage.setItem('authToken', token);
 
-
         let allSites: Option[]
         getSites().then(response => {
             allSites = response.data.map((item: Site) => ({
@@ -151,7 +150,15 @@ export const Preference = () => {
                                 <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
                             </Stack>
                         </Grid>
-                        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleUnsubscribe}
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                            >
+                                Unsubscribe
+                            </Button>
                             <Button
                                 endIcon={<SaveIcon />}
                                 variant="contained"
@@ -160,14 +167,6 @@ export const Preference = () => {
                                 sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
                             >
                                 Save Preferences
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleUnsubscribe}
-                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-                            >
-                                Unsubscribe
                             </Button>
                         </Grid>
                     </Box>
