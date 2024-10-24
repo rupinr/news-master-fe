@@ -17,19 +17,15 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ handleThemeToggle, darkTheme }) => {
   return (
     <Router>
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Header />
-        <ThemeToggle onToggle={handleThemeToggle} />
-        <Box component="main" sx={{ flexGrow: 1, pt: 8 }}>
-          <Routes>
-            <Route path="/" element={<Email />} />
-            <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/preferences" element={<ScheduleSelector />} />
-            <Route path="*" element={<Error />} />
-          </Routes>
-        </Box>
-        <Footer />
-      </Box>
+      <Header />
+      <ThemeToggle onToggle={handleThemeToggle} />
+      <Routes>
+        <Route path="/" element={<Email />} />
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/preferences" element={<ScheduleSelector />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <Footer />
     </Router>
   );
 };

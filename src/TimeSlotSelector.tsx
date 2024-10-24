@@ -36,6 +36,7 @@ const TimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({ initialTimeSlot, on
                 <FormControlLabel value="Morning" control={<Radio />} label="Morning" />
                 <FormControlLabel value="Afternoon" control={<Radio />} label="Afternoon" />
                 <FormControlLabel value="Evening" control={<Radio />} label="Evening" />
+                <FormControlLabel value="Night" control={<Radio />} label="Night" />
             </RadioGroup>
         </div>
     );

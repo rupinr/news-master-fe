@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 interface SiteSelectorProps {
     options: Option[];
@@ -18,18 +19,34 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
     const [allOptions, setAllOptions] = useState<Option[]>(options);
 
     useEffect(() => {
+        console.log('options', options)
         setAllOptions(options);
         setSelectedOptions(defaultOptions);
-    }, [defaultOptions]);
+    }, [defaultOptions, options]);
+
 
 
     const handleUpdate = (event: any, newValue: Option[]) => {
+        console.log('selectedOptions', selectedOptions)
+        console.log('allOptions', allOptions)
+        console.log('newValue', newValue)
+        const deletedOne = selectedOptions.filter(item => !newValue.includes(item));
+        if (deletedOne.length == 1) {
+            console.log('deletedOne', deletedOne[0].label)
+            setAllOptions([...allOptions, deletedOne[0]])
+        }
+
+        console.log('allOptions22', allOptions)
+
         setSelectedOptions(newValue);
         onSiteChange(newValue);
     };
 
     return (
         <div>
+            <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
+                Select the News Sources:
+            </Typography>
             <Autocomplete
                 multiple
                 id="tags-outlined"
