@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import SaveIcon from '@mui/icons-material/Save';
 import { UnknownErrorAlert, SuccessfullSaveAlert } from './Alerts'
 
-export const ScheduleSelector = () => {
+export const Preference = () => {
     const [searchParams] = useSearchParams();
     const token = searchParams.get('authToken');
     const [timeSlot, setTimeSlot] = useState('');
@@ -81,10 +81,9 @@ export const ScheduleSelector = () => {
     };
 
 
-    const handleCancelSubscription = async () => {
-        console.log("Cancel susbtripiton")
-    }
+    const handleUnsubscribe = async () => {
 
+    }
     useEffect(() => {
         if (token) {
             fetchData();
@@ -131,11 +130,12 @@ export const ScheduleSelector = () => {
 
     return (
         <div>
-            {success ?
+            {success ? (
                 <Box sx={{ my: 4 }}>
                     <SuccessfullSaveAlert />
                 </Box>
-                : <Container maxWidth="md">
+            ) : (
+                <Container maxWidth="md">
                     <Box sx={{ my: 4 }}>
                         <Typography component="p" sx={{ mb: 2 }}>
                             To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning espresso to start your day, a noon latte to energize your afternoon, or an evening cappuccino to wind down, we've got you covered.
@@ -157,20 +157,30 @@ export const ScheduleSelector = () => {
                                 variant="contained"
                                 color="primary"
                                 onClick={handleSubmit}
-                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}>
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                            >
                                 Save Preferences
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleUnsubscribe}
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                            >
+                                Unsubscribe
                             </Button>
                         </Grid>
                     </Box>
-                </Container>}
+                </Container>
+            )}
             {error && (
                 <Box sx={{ my: 4 }}>
                     <UnknownErrorAlert />
                 </Box>
             )}
-
         </div>
+
     );
 };
 
-export default ScheduleSelector;
+export default Preference;

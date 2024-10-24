@@ -4,18 +4,18 @@ export const lightTheme: Theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#4A90E2', // Soft blue
+      main: '#3A7CA5', // Softer blue
     },
     secondary: {
-      main: '#50E3C2', // Mint green
+      main: '#56C596', // Soft green
     },
     background: {
-      default: '#F7F8FA', // Light gray
+      default: '#F4F5F7', // Light gray
       paper: '#FFFFFF',
     },
     text: {
-      primary: '#333333', // Dark gray
-      secondary: '#757575', // Medium gray
+      primary: '#2E2E2E', // Darker gray
+      secondary: '#616161', // Medium gray
     },
   },
   typography: {
@@ -23,16 +23,16 @@ export const lightTheme: Theme = createTheme({
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#4A90E2',
+      color: '#3A7CA5',
     },
     h6: {
       fontSize: '1.25rem',
       fontWeight: 500,
-      color: '#333333',
+      color: '#2E2E2E',
     },
     body1: {
       fontSize: '1rem',
-      color: '#757575',
+      color: '#616161',
     },
   },
   components: {
@@ -43,10 +43,10 @@ export const lightTheme: Theme = createTheme({
           textTransform: 'none',
         },
         containedPrimary: {
-          backgroundColor: '#4A90E2',
+          backgroundColor: '#3A7CA5',
           color: '#FFFFFF',
           '&:hover': {
-            backgroundColor: '#4185D2',
+            backgroundColor: '#356B8D',
           },
         },
       },
@@ -54,23 +54,22 @@ export const lightTheme: Theme = createTheme({
   },
 });
 
-
 export const darkTheme: Theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#82B1FF', // Soft light blue
+      main: '#87CEFA', // Light sky blue
     },
     secondary: {
-      main: '#B9F6CA', // Mint green
+      main: '#80CBC4', // Light mint green
     },
     background: {
       default: '#121212', // Almost black
       paper: '#1E1E1E', // Dark gray
     },
     text: {
-      primary: '#FFFFFF', // White
-      secondary: '#B0B0B0', // Light gray
+      primary: '#E0E0E0', // Light gray
+      secondary: '#BDBDBD', // Slightly darker gray
     },
   },
   typography: {
@@ -78,16 +77,16 @@ export const darkTheme: Theme = createTheme({
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#82B1FF',
+      color: '#87CEFA',
     },
     h6: {
       fontSize: '1.25rem',
       fontWeight: 500,
-      color: '#FFFFFF',
+      color: '#E0E0E0',
     },
     body1: {
       fontSize: '1rem',
-      color: '#B0B0B0',
+      color: '#BDBDBD',
     },
   },
   components: {
@@ -98,15 +97,13 @@ export const darkTheme: Theme = createTheme({
           textTransform: 'none',
         },
         containedPrimary: {
-          backgroundColor: '#82B1FF',
-          color: '#000000',
+          backgroundColor: '#87CEFA',
+          color: '#121212',
           '&:hover': {
-            backgroundColor: '#6FA8E5',
+            backgroundColor: '#76B6D9',
           },
         },
       },
     },
   },
 });
-
-
