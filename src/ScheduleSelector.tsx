@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import { useSearchParams } from 'react-router-dom';
-import { getSites, updatePreference, getSubscription, SubscriptionData, DailyFrequency, Site } from './service/service';
+import { getSites, updatePreference, getSubscription, cancelSubscription, SubscriptionData, DailyFrequency, Site } from './service/service';
 import DaySelector from './DaySelector';
 import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
@@ -16,7 +16,7 @@ import { UnknownErrorAlert, SuccessfullSaveAlert } from './Alerts'
 
 export const Preference = () => {
     const [searchParams] = useSearchParams();
-    const token = searchParams.get('authToken');
+    const [token] = useState(searchParams.get('authToken'))
     const [timeSlot, setTimeSlot] = useState('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -81,8 +81,13 @@ export const Preference = () => {
 
 
     const handleUnsubscribe = async () => {
-
+        if (token != null) {
+            cancelSubscription(token).then(() => {
+                navigate('/')
+            })
+        }
     }
+
     useEffect(() => {
         if (token) {
             fetchData();
@@ -154,7 +159,7 @@ export const Preference = () => {
                             <Grid>
                                 <Button
                                     variant="outlined"
-                                    color="secondary"
+                                    color="error"
                                     onClick={handleUnsubscribe}
                                     sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
                                 >

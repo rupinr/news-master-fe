@@ -62,6 +62,16 @@ const defaultSubscriptionData: SubscriptionData = {
     }
 };
 
+export const cancelSubscription = async (token: string): Promise<ApiResponse<any>> => {
+    try {
+        const response = await axios.post<any>(`${SERVER_BASE_URL}/cancel`, { confirmed: false }, { headers: { 'Authorization': token } });
+        return { success: true, data: response.data, status: response.status, error: '' };
+    } catch (error: any) {
+        console.error('Error canelling subscription:', error);
+        return { success: false, data: null, error: error.message, status: error.status };
+    }
+};
+
 export const createUser = async (data: CreateUserPayload): Promise<ApiResponse<any>> => {
     try {
         const response = await axios.post<any>(`${SERVER_BASE_URL}/user`, data);
