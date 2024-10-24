@@ -151,23 +151,27 @@ export const Preference = () => {
                             </Stack>
                         </Grid>
                         <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleUnsubscribe}
-                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-                            >
-                                Unsubscribe
-                            </Button>
-                            <Button
-                                endIcon={<SaveIcon />}
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSubmit}
-                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-                            >
-                                Save Preferences
-                            </Button>
+                            <Grid>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={handleUnsubscribe}
+                                    sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                                >
+                                    Unsubscribe
+                                </Button>
+                            </Grid>
+                            <Grid>
+                                <Button
+                                    endIcon={<SaveIcon />}
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleSubmit}
+                                    sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                                >
+                                    Save Preferences
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Container>
