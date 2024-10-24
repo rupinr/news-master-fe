@@ -12,13 +12,14 @@ import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
 import { useNavigate } from 'react-router-dom'
 import SaveIcon from '@mui/icons-material/Save';
-import { UnknownErrorAlert } from './Alerts'
+import { UnknownErrorAlert, SuccessfullSaveAlert } from './Alerts'
 
 export const ScheduleSelector = () => {
     const [searchParams] = useSearchParams();
     const token = searchParams.get('authToken');
     const [timeSlot, setTimeSlot] = useState('');
     const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
     const [defaultOptions, setDefaultOptions] = useState<Option[]>([]);
     const [selectedSites, setSelectedSites] = useState<Option[]>([]);
@@ -79,13 +80,18 @@ export const ScheduleSelector = () => {
         })
     };
 
+
+    const handleCancelSubscription = async () => {
+        console.log("Cancel susbtripiton")
+    }
+
     useEffect(() => {
         if (token) {
             fetchData();
-            searchParams.delete('authToken'); // Remove token from URL
+            searchParams.delete('authToken');
             navigate({
                 search: searchParams.toString(),
-            }, { replace: true }); // Use replace to update URL without affecting history
+            }, { replace: true });
         }
     }, [token, searchParams, navigate]);
 
@@ -114,45 +120,56 @@ export const ScheduleSelector = () => {
             .then(response => {
                 if (response.success) {
                     setError(false)
-                    navigate('/thank-you')
+                    setSuccess(true)
                 } else {
                     setError(true)
+                    setSuccess(false)
                 }
             })
             .catch(error => console.error('Unexpected error:', error));
     };
 
     return (
-        <Container maxWidth="md">
+        <div>
+            {success ?
+                <Box sx={{ my: 4 }}>
+                    <SuccessfullSaveAlert />
+                </Box>
+                : <Container maxWidth="md">
+                    <Box sx={{ my: 4 }}>
+                        <Typography component="p" sx={{ mb: 2 }}>
+                            To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning espresso to start your day, a noon latte to energize your afternoon, or an evening cappuccino to wind down, we've got you covered.
+                        </Typography>
+                        <Grid container spacing={2}>
+                            <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
+                        </Grid>
+                        <Grid container spacing={2}>
+                            <TimeSlotSelector initialTimeSlot={timeSlot} onTimeSlotChange={handleTimeSlotChangeFor} />
+                        </Grid>
+                        <Grid container spacing={2}>
+                            <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
+                                <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
+                            </Stack>
+                        </Grid>
+                        <Grid container spacing={2} sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Button
+                                endIcon={<SaveIcon />}
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSubmit}
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}>
+                                Save Preferences
+                            </Button>
+                        </Grid>
+                    </Box>
+                </Container>}
+            {error && (
+                <Box sx={{ my: 4 }}>
+                    <UnknownErrorAlert />
+                </Box>
+            )}
 
-            <Box sx={{ my: 4 }}>
-                <Typography component="p" sx={{ mb: 2 }}>
-                    To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning espresso to start your day, a noon latte to energize your afternoon, or an evening cappuccino to wind down, we've got you covered.                </Typography>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                    Select Days of the Week:
-                </Typography>
-                <Grid container spacing={2}>
-                    <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
-                </Grid>
-                <Grid container spacing={2}>
-                    <TimeSlotSelector initialTimeSlot={timeSlot} onTimeSlotChange={handleTimeSlotChangeFor} />
-                </Grid>
-                <Grid container spacing={2}>
-                    <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
-                        <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
-                    </Stack>
-                </Grid>
-                <Grid container spacing={2}>
-                    <Button endIcon={<SaveIcon />} variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 4 }}>
-                        Save Preferences
-                    </Button>
-                </Grid>
-            </Box>
-            <Box sx={{ my: 4 }}>
-                {(error) ? <UnknownErrorAlert /> : null}
-            </Box>
-
-        </Container>
+        </div>
     );
 };
 

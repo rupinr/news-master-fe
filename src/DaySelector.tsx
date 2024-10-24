@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid2';
 import { useState } from 'react'
 import { useEffect } from 'react'
-
+import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { DailyFrequency } from './service/service';
@@ -37,6 +37,9 @@ const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) =
 
     return (
         <div>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+                Select Days of the Week:
+            </Typography>
             <Grid container spacing={2}>
                 {Object.entries(days).map(([day, checked]) => (
                     <Grid size={{ xs: 6, sm: 4 }} key={day}>

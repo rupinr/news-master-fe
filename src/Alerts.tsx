@@ -12,6 +12,16 @@ export function SuccessfullEmailSubmitAlert() {
     );
 }
 
+export function SuccessfullSaveAlert() {
+    return (
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            <Typography component="h1" sx={{ mb: 2 }}>
+                Thank you for subscribing!
+                You'll soon start receiving personalized updates based on your selected schedule. Your journey to staying informed starts here!            </Typography>
+        </Alert>
+    );
+}
+
 
 export function TooManyEmailSubmitAlert() {
     return (
