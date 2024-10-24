@@ -123,10 +123,9 @@ export const Preference = () => {
             .then(response => {
                 if (response.success) {
                     setError(false)
-                    setSuccess(true)
+                    navigate('/thank-you')
                 } else {
                     setError(true)
-                    setSuccess(false)
                 }
             })
             .catch(error => console.error('Unexpected error:', error));
@@ -134,53 +133,47 @@ export const Preference = () => {
 
     return (
         <div>
-            {success ? (
+            <Container maxWidth="md">
                 <Box sx={{ my: 4 }}>
-                    <SuccessfullSaveAlert />
+                    <Typography component="p" sx={{ mb: 2 }}>
+                        To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning espresso to start your day, a noon latte to energize your afternoon, or an evening cappuccino to wind down, we've got you covered.
+                    </Typography>
+                    <Grid container spacing={2}>
+                        <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
+                    </Grid>
+                    <Grid container spacing={2}>
+                        <TimeSlotSelector initialTimeSlot={timeSlot} onTimeSlotChange={handleTimeSlotChangeFor} />
+                    </Grid>
+                    <Grid container spacing={2}>
+                        <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
+                            <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
+                        </Stack>
+                    </Grid>
+                    <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <Grid>
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                onClick={handleUnsubscribe}
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                            >
+                                Unsubscribe
+                            </Button>
+                        </Grid>
+                        <Grid>
+                            <Button
+                                endIcon={<SaveIcon />}
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSubmit}
+                                sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
+                            >
+                                Confirm
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Box>
-            ) : (
-                <Container maxWidth="md">
-                    <Box sx={{ my: 4 }}>
-                        <Typography component="p" sx={{ mb: 2 }}>
-                            To tailor your news experience, please select the days of the week and the preferred time slot for your email delivery. Whether you prefer a morning espresso to start your day, a noon latte to energize your afternoon, or an evening cappuccino to wind down, we've got you covered.
-                        </Typography>
-                        <Grid container spacing={2}>
-                            <DaySelector initialDays={daySelection} onDayChange={handleDayChangeFor} />
-                        </Grid>
-                        <Grid container spacing={2}>
-                            <TimeSlotSelector initialTimeSlot={timeSlot} onTimeSlotChange={handleTimeSlotChangeFor} />
-                        </Grid>
-                        <Grid container spacing={2}>
-                            <Stack spacing={3} sx={{ width: '100%', mt: 3 }}>
-                                <SiteSelector options={options} defaultOptions={defaultOptions} onSiteChange={handleSiteChange} />
-                            </Stack>
-                        </Grid>
-                        <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <Grid>
-                                <Button
-                                    variant="outlined"
-                                    color="error"
-                                    onClick={handleUnsubscribe}
-                                    sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-                                >
-                                    Unsubscribe
-                                </Button>
-                            </Grid>
-                            <Grid>
-                                <Button
-                                    endIcon={<SaveIcon />}
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleSubmit}
-                                    sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-                                >
-                                    Confirm
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Container>
-            )}
+            </Container>
             {error && (
                 <Box sx={{ my: 4 }}>
                     <UnknownErrorAlert />
