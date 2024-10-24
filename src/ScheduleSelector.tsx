@@ -83,7 +83,7 @@ export const Preference = () => {
     const handleUnsubscribe = async () => {
         if (token != null) {
             cancelSubscription(token).then(() => {
-                navigate('/')
+                navigate('/goodbye')
             })
         }
     }
@@ -174,7 +174,7 @@ export const Preference = () => {
                                     onClick={handleSubmit}
                                     sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
                                 >
-                                    Save Preferences
+                                    Confirm
                                 </Button>
                             </Grid>
                         </Grid>
