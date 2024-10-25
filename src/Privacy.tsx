@@ -14,7 +14,7 @@ const Privacy = () => {
                     Information We Collect
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 2 }}>
-                    We collect data to provide better services to all our users. This includes information you provide to us directly, information we get from your use of our services, and information we get from third parties.
+                    We only collect your email address and preferred news sources and subscription schedule.
                 </Typography>
                 <Typography variant="h6" component="h2" sx={{ mt: 4, mb: 2 }}>
                     How We Use Information
@@ -35,8 +35,8 @@ const Privacy = () => {
                     You have the right to access, update, and delete your personal information. You can exercise these rights by contacting us.
                 </Typography>
                 <Typography variant="body1" sx={{ mt: 4 }}>
-                    If you have any questions or concerns about our use of your personal information, please contact us at: <Link href="mailto:privacy@example.com">privacy@example.com</Link>.
-                </Typography>
+                    If you have any questions or concerns about our use of your personal information, please reach out to us through our contact form.                </Typography>
+
             </Box>
         </Container>
     );
