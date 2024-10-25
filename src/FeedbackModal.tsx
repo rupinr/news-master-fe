@@ -17,11 +17,11 @@ const FeedbackModal: React.FC<{ open: boolean, handleClose: () => void }> = ({ o
         <Modal open={open} onClose={handleClose} aria-labelledby="feedback-modal" aria-describedby="feedback-modal-description">
             <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: { xs: '80%', sm: 400 }, bgcolor: 'background.paper', boxShadow: 24, p: 4, borderRadius: 2 }}>
                 <Typography id="feedback-modal-title" variant="h6" component="h2" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    We value your feedback
+                    Contact Us
                 </Typography>
                 <TextField
                     fullWidth
-                    label="Your feedback"
+                    label="How can we help you?"
                     multiline
                     rows={4}
                     variant="outlined"
@@ -29,7 +29,7 @@ const FeedbackModal: React.FC<{ open: boolean, handleClose: () => void }> = ({ o
                     onChange={(e) => setFeedback(e.target.value)}
                     sx={{ mt: 2 }}
                 />
-                <Button variant="contained" sx={{ mt: 2, backgroundColor: theme.palette.primary.main }} onClick={handleSubmit}>Submit</Button>
+                <Button variant="contained" sx={{ mt: 2, backgroundColor: theme.palette.primary.main }} onClick={handleSubmit}>Send</Button>
             </Box>
         </Modal>
     );
