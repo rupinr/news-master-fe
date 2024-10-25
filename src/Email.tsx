@@ -7,6 +7,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Typography';
 import Grid from '@mui/material/Grid2';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
+
 import { SuccessfullEmailSubmitAlert, TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
 
 const Email = () => {
@@ -16,6 +21,7 @@ const Email = () => {
     const [maxAttemptError, setMaxAttemptError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [generalError, setGeneralError] = useState(false)
+    const [consent, setConsent] = useState(false)
 
 
     const handleChange = (event: any) => {
@@ -64,11 +70,28 @@ const Email = () => {
                             onChange={handleChange}
                         />
                     </Grid>
+                    <Grid size={{ xs: 12 }}>
+                        <FormControlLabel sx={{ width: '100%' }}
+                            control={
+                                <Checkbox
+                                    checked={consent}
+                                    onChange={() => setConsent(!consent)}
+                                    name="consent"
+                                />
+                            }
+                            label={
+                                <Typography variant="body2" sx={{ width: '100%' }}>
+                                    I agree that this is my own email address and I consent to receive emails from QuickBrewNews.
+                                </Typography>
+                            }
+                        />
+                    </Grid>
                     <Grid size={{ xs: 12, sm: 4 }}>
-                        <Button variant="contained" disabled={!isEmailValid || success} endIcon={<MailOutlineIcon />} onClick={handleClick} fullWidth>
+                        <Button variant="contained" disabled={!consent || !isEmailValid} endIcon={<MailOutlineIcon />} onClick={handleClick} fullWidth>
                             Subscribe
                         </Button>
                     </Grid>
+
                 </Grid>
             </Box> : null}
 
