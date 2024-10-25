@@ -1,12 +1,10 @@
 import React from 'react';
 import Grid from '@mui/material/Grid2';
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { DailyFrequency } from './service/service';
-
 
 interface DaySelectorProps {
     initialDays: DailyFrequency;
@@ -15,10 +13,8 @@ interface DaySelectorProps {
 
 const capitalize = (str: string) => str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 
-
 const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) => {
-
-    const [days, setDays] = useState(initialDays);
+    const [days, setDays] = useState<DailyFrequency>(initialDays);
 
     const handleDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = event.target;
@@ -26,14 +22,13 @@ const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) =
             ...prevDays,
             [value]: checked,
         }));
-        const newDays = { ...initialDays, [value]: initialDays };
+        const newDays = { ...initialDays, [value]: checked }; // Fixed here
         onDayChange(newDays);
     };
 
     useEffect(() => {
         setDays(initialDays);
     }, [initialDays]);
-
 
     return (
         <div>
@@ -44,7 +39,7 @@ const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) =
                 {Object.entries(days).map(([day, checked]) => (
                     <Grid size={{ xs: 6, sm: 4 }} key={day}>
                         <FormControlLabel
-                            control={<Checkbox value={day} checked={checked} onChange={handleDayChange} />}
+                            control={<Checkbox value={day} checked={!!checked} onChange={handleDayChange} />}
                             label={capitalize(day)}
                         />
                     </Grid>
@@ -53,4 +48,5 @@ const DaySelector: React.FC<DaySelectorProps> = ({ initialDays, onDayChange }) =
         </div>
     );
 };
+
 export default DaySelector;
