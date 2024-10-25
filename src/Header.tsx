@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 const Header = () => {
     return (
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar sx={{ minHeight: 30 }} >
                 <Typography variant="h6">
                     QuickBrewNews
                 </Typography>

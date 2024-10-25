@@ -3,6 +3,7 @@ import { Fab, Typography, Box, Container } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import FeedbackModal from './FeedbackModal';
 import CommentIcon from '@mui/icons-material/Comment';
+import Link from '@mui/material/Link';
 
 const Footer: React.FC = () => {
     const [open, setOpen] = useState(false);
@@ -34,6 +35,10 @@ const Footer: React.FC = () => {
                 <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
                     Made with ❤️ by QuickBrewNews.
                 </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Link href="/#/privacy" variant="body2" color="primary">Privacy</Link>
+                    <Link href="/#/about" variant="body2" color="primary">About</Link>
+                </Box>
                 <Fab
                     onClick={handleOpen}
                     color="primary"

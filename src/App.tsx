@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { Preference } from './ScheduleSelector';
 import { Error } from './Error';
 import Email from './Email';
@@ -8,6 +8,8 @@ import ThemeToggle from './ThemeToggle';
 import React from 'react';
 import { SeeYouAgain } from './SeeYouAgain'
 import { ThankYou } from './ThankYou';
+import Privacy from './Privacy';
+import About from './About';
 
 interface AppProps {
   handleThemeToggle: (isDarkTheme: boolean) => void;
@@ -24,6 +26,8 @@ const App: React.FC<AppProps> = ({ handleThemeToggle, darkTheme }) => {
         <Route path="/preferences" element={<Preference />} />
         <Route path="/goodbye" element={<SeeYouAgain />} />
         <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
