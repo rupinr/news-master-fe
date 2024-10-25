@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                     <Link href="/#/privacy" variant="body2" color="primary">Privacy</Link>
                     <Link href="/#/about" variant="body2" color="primary">About</Link>
-                    <Link onClick={handleOpen} href="/#" variant="body2" color="primary">Contact Us</Link>
+                    <Link onClick={handleOpen} href="/#/" variant="body2" color="primary">Contact Us</Link>
                 </Box>
                 <FeedbackModal open={open} handleClose={handleClose} />
             </Box>
