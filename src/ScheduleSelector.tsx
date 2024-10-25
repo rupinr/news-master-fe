@@ -61,20 +61,26 @@ export const Preference = () => {
         }).then(() => {
             let existingSitePreference: Option[]
             getSubscription(token).then(response => {
-                existingSitePreference = response.data.sites.map(item => ({
-                    label: allSites.find((site: Option) => site.value === item)?.label!!,
-                    value: item
-                }));
-                const filteredItems = allSites.filter(item =>
-                    !existingSitePreference.some(toRemove =>
-                        toRemove.label === item.label && toRemove.value === item.value
-                    )
-                );
-                setOptions(filteredItems);
-                setDefaultOptions(existingSitePreference);
-                setSelectedSites(existingSitePreference);
-                setDaySelection(response.data.subscriptionSchedule.dailyFrequency);
-                setTimeSlot(response.data.subscriptionSchedule.timeSlot);
+
+                if (response.success) {
+                    existingSitePreference = response.data.sites.map(item => ({
+                        label: allSites.find((site: Option) => site.value === item)?.label!!,
+                        value: item
+                    }));
+                    const filteredItems = allSites.filter(item =>
+                        !existingSitePreference.some(toRemove =>
+                            toRemove.label === item.label && toRemove.value === item.value
+                        )
+                    );
+                    setOptions(filteredItems);
+                    setDefaultOptions(existingSitePreference);
+                    setSelectedSites(existingSitePreference);
+                    setDaySelection(response.data.subscriptionSchedule.dailyFrequency);
+                    setTimeSlot(response.data.subscriptionSchedule.timeSlot);
+                }
+                else {
+                    navigate('/error')
+                }
             })
         })
     };
