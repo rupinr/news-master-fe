@@ -50,8 +50,14 @@ const Email = () => {
     return (
         <Container maxWidth="sm">
             {(!success) ? <Box sx={{ my: 4 }}>
-                <Typography component="h1" sx={{ mb: 2 }}>
-                    Welcome to your ultimate news hub! Dive into a world of information with our personalized newsletter service, crafted just for you. Subscribe to receive daily updates from your favorite news websites, all curated to match your interests and schedule. Whether it's breaking news, in-depth analysis, or light-hearted features, customize your delivery to stay informed in the way that suits you best. Your news, your way, every day.
+                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+                    Welcome to your ultimate news hub! Dive into a world of information with our personalized newsletter service, crafted just for you.
+                </Typography>
+                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+                    Subscribe to receive daily updates from your favorite news websites, all curated to match your schedule.
+                </Typography>
+                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+                    Your news, your way, every day.
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12, sm: 8 }}>
