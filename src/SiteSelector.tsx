@@ -42,7 +42,7 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
                 id="tags-outlined"
                 options={allOptions}
                 value={selectedOptions}
-
+                ChipProps={{ color: "primary" }}
                 getOptionLabel={(option) => option.label}
                 onChange={handleUpdate}
                 filterSelectedOptions
