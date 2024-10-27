@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Fab, Typography, Box, Container } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import FeedbackModal from './FeedbackModal';
-import CommentIcon from '@mui/icons-material/Comment';
 import Link from '@mui/material/Link';
 
 const Footer: React.FC = () => {

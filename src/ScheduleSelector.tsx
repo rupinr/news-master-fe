@@ -12,14 +12,13 @@ import TimeSlotSelector from './TimeSlotSelector';
 import SiteSelector, { Option } from './SiteSelector';
 import { useNavigate } from 'react-router-dom'
 import SaveIcon from '@mui/icons-material/Save';
-import { UnknownErrorAlert, SuccessfullSaveAlert } from './Alerts'
+import { UnknownErrorAlert } from './Alerts'
 
 export const Preference = () => {
     const [searchParams] = useSearchParams();
     const [token] = useState(searchParams.get('authToken'))
     const [timeSlot, setTimeSlot] = useState('');
     const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
     const [defaultOptions, setDefaultOptions] = useState<Option[]>([]);
     const [selectedSites, setSelectedSites] = useState<Option[]>([]);
