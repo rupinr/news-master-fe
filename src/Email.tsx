@@ -26,8 +26,9 @@ const Email = () => {
 
     const handleChange = (event: any) => {
         setEmail(event.target.value)
-        setIsEmailValid(emailRegex.test(email));
+        setIsEmailValid(emailRegex.test(event.target.value));
     }
+
 
 
     const handleClick = () => {
@@ -74,6 +75,7 @@ const Email = () => {
                             variant="standard"
                             value={email}
                             onChange={handleChange}
+                            onPaste={handleChange}
                         />
                     </Grid>
                     <Grid size={{ xs: 12 }}>
