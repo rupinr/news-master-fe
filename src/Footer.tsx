@@ -29,11 +29,14 @@ const Footer: React.FC = () => {
                     bottom: 0,
                     width: '100%',
                     zIndex: 10,
-                }}
-            >
-                <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
-                    Made with ❤️ by QuickBrewNews.
-                </Typography>
+                }}>
+
+                <Link href="/#" underline="none">
+                    <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
+                        Made with ❤️ by QuickBrewNews.
+                    </Typography>
+                </Link>
+
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                     <Link href="/#/privacy" variant="body2" color="primary">Privacy</Link>
                     <Link href="/#/about" variant="body2" color="primary">About</Link>
