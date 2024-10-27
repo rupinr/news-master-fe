@@ -82,9 +82,9 @@ export const createUser = async (data: CreateUserPayload): Promise<ApiResponse<a
     }
 };
 
-export const getSites = async (): Promise<ApiResponse<Site[]>> => {
+export const getSites = async (token: string): Promise<ApiResponse<Site[]>> => {
     try {
-        const response = await axios.get(`${SERVER_BASE_URL}/sites`);
+        const response = await axios.get(`${SERVER_BASE_URL}/sites`, { headers: { Authorization: token } });
         return { success: true, data: response.data, error: '', status: 200 };
     } catch (error: any) {
         console.error('Error getting sites:', error);

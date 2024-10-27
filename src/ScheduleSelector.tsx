@@ -52,7 +52,7 @@ export const Preference = () => {
         sessionStorage.setItem('authToken', token);
 
         let allSites: Option[]
-        getSites().then(response => {
+        getSites(token).then(response => {
             allSites = response.data.map((item: Site) => ({
                 label: item.name,
                 value: item.url
