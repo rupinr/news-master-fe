@@ -100,6 +100,8 @@ export const Preference = () => {
             navigate({
                 search: searchParams.toString(),
             }, { replace: true });
+        } else {
+            navigate('/')
         }
     }, [token, searchParams, navigate]);
 
