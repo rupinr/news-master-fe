@@ -41,9 +41,7 @@ const TimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({ initialTimeSlot, on
     const twelwe = date.setHours(12, 0, 0, 0);
     const eighteen = date.setHours(18, 0, 0, 0);
     const twenty = date.setHours(20, 0, 0, 0);
-
-    date.setHours(12, 0);
-
+    const twentyThree = date.setHours(23, 0, 0, 0);
 
     return (
         <div>
@@ -54,7 +52,7 @@ const TimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({ initialTimeSlot, on
                 <FormControlLabel value="Morning" control={<Radio />} label={`Morning (${formatTimeRange(six, twelwe)})`} />
                 <FormControlLabel value="Afternoon" control={<Radio />} label={`Afternoon (${formatTimeRange(twelwe, eighteen)})`} />
                 <FormControlLabel value="Evening" control={<Radio />} label={`Evening (${formatTimeRange(eighteen, twenty)})`} />
-                <FormControlLabel value="Night" control={<Radio />} label={`Night (${formatTimeRange(twenty, six)})`} />
+                <FormControlLabel value="Night" control={<Radio />} label={`Night (${formatTimeRange(twenty, twentyThree)})`} />
             </RadioGroup>
         </div>
     );
