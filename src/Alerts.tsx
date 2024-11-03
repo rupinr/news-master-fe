@@ -1,14 +1,23 @@
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import InfoIcon from '@mui/icons-material/Info';
+
 import Typography from '@mui/material/Typography';
 
 export function SuccessfullEmailSubmitAlert() {
     return (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            <Typography component="h1" sx={{ mb: 2 }}>
-                Thank you for subscribing! Check your email and click the confirmation link to complete your subscription. Your personalized news updates await!
-            </Typography>
-        </Alert>
+        <div>
+            <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+                <Typography component="h1" sx={{ mb: 2 }}>
+                    Thank you for subscribing! Check your email and click the confirmation link to complete your subscription.
+                </Typography>
+            </Alert>
+            <Alert icon={<InfoIcon fontSize="inherit" />} severity="success">
+                <Typography component="h1" sx={{ mb: 2 }}>
+                    If you are already a subscriber, click on the link to customize your preferences.
+                </Typography>
+            </Alert >
+        </div >
     );
 }
 

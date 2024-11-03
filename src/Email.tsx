@@ -55,7 +55,7 @@ const Email = () => {
                     Welcome to your ultimate news hub! Dive into a world of information with our personalized newsletter service, crafted just for you.
                 </Typography>
                 <Typography component="div" variant="body1" sx={{ mb: 2 }}>
-                    Subscribe to receive daily updates from your favorite news websites, all curated to match your schedule.
+                    Enter your email address to start a subscription or update your subscription preferences. Receive daily updates from your favorite news websites, all curated to match your schedule.
                 </Typography>
                 <Typography component="div" variant="body1" sx={{ mb: 2 }}>
                     Your news, your way, every day.
