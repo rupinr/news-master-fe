@@ -21,17 +21,6 @@ export function SuccessfullEmailSubmitAlert() {
     );
 }
 
-export function SuccessfullSaveAlert() {
-    return (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            <Typography component="h1" sx={{ mb: 2 }}>
-                Thank you for subscribing!
-                You'll soon start receiving personalized updates based on your selected schedule. Your journey to staying informed starts here!            </Typography>
-        </Alert>
-    );
-}
-
-
 export function TooManyEmailSubmitAlert() {
     return (
         <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
@@ -47,17 +36,6 @@ export function UnknownErrorAlert() {
         <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
             <Typography component="h1" sx={{ mb: 2 }}>
                 Uh-oh! An unknown error occurred. Please try again. We apologize for any inconvenience caused.
-            </Typography>
-        </Alert>
-    );
-}
-
-
-export function SuccessfullEmailConfirmation() {
-    return (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            <Typography component="h1" sx={{ mb: 2 }}>
-                Congrats! Your personalized news journey starts here. Watch your inbox for updates. Welcome aboard!
             </Typography>
         </Alert>
     );
