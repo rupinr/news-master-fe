@@ -6,8 +6,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Typography';
 import Grid from '@mui/material/Grid2';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-
+import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
@@ -51,13 +50,16 @@ const Email = () => {
     return (
         <Container maxWidth="sm">
             {(!success) ? <Box sx={{ my: 4 }}>
-                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
-                    Welcome to your ultimate news hub! Dive into a world of information with our personalized newsletter service, crafted just for you.
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', }}>
+                    Welcome to your ultimate news hub!
                 </Typography>
-                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
-                    Enter your email address to start a subscription or update your subscription preferences. Receive daily updates from your favorite news websites, all curated to match your schedule.
+                <Typography variant="body1" sx={{ mb: 3 }}>
+                    Dive into a world of information with our personalized newsletter service, crafted just for you.
                 </Typography>
-                <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1" sx={{ mb: 4, }}>
+                    Enter your email address to start a subscription or update your subscription preferences.
+                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
                     Your news, your way, every day.
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
@@ -89,14 +91,14 @@ const Email = () => {
                             }
                             label={
                                 <Typography variant="body2" sx={{ width: '100%' }}>
-                                    I agree that this is my own email address and I consent to receive emails from QuickBrewNews.
+                                    I confirm this is my email and consent to receive emails from QuickBrewNews.
                                 </Typography>
                             }
                         />
                     </Grid>
                     <Grid size={{ xs: 12, sm: 4 }}>
-                        <Button variant="contained" disabled={!consent || !isEmailValid} endIcon={<MailOutlineIcon />} onClick={handleClick} fullWidth>
-                            Subscribe
+                        <Button variant="contained" disabled={!consent || !isEmailValid} startIcon={<SendIcon />} onClick={handleClick} fullWidth>
+                            Send Email
                         </Button>
                     </Grid>
 
