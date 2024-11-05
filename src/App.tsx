@@ -10,6 +10,8 @@ import { SeeYouAgain } from './SeeYouAgain'
 import { ThankYou } from './ThankYou';
 import Privacy from './Privacy';
 import About from './About';
+import { CheckYourEmail } from './CheckYourEmail';
+
 
 interface AppProps {
   handleThemeToggle: (isDarkTheme: boolean) => void;
@@ -23,6 +25,7 @@ const App: React.FC<AppProps> = ({ handleThemeToggle, darkTheme }) => {
       <ThemeToggle onToggle={handleThemeToggle} />
       <Routes>
         <Route path="/" element={<Email />} />
+        <Route path="/check-your-email" element={<CheckYourEmail />} />
         <Route path="/preferences" element={<Preference />} />
         <Route path="/goodbye" element={<SeeYouAgain />} />
         <Route path="/thank-you" element={<ThankYou />} />

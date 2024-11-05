@@ -9,18 +9,20 @@ import Grid from '@mui/material/Grid2';
 import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { useNavigate } from 'react-router-dom'
 
 
-import { SuccessfullEmailSubmitAlert, TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
+import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
 
 const Email = () => {
     const [email, setEmail] = useState('')
     const [isEmailValid, setIsEmailValid] = useState(false);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const [maxAttemptError, setMaxAttemptError] = useState(false)
-    const [success, setSuccess] = useState(false)
     const [generalError, setGeneralError] = useState(false)
     const [consent, setConsent] = useState(false)
+
+    const navigate = useNavigate()
 
 
     const handleChange = (event: any) => {
@@ -28,14 +30,12 @@ const Email = () => {
         setIsEmailValid(emailRegex.test(event.target.value));
     }
 
-
-
     const handleClick = () => {
         if (isEmailValid) {
             createUser({ "email": email })
                 .then(response => {
                     if (response.success) {
-                        setSuccess(true)
+                        navigate('check-your-email')
                     } else if (response.status == 429) {
                         setMaxAttemptError(true)
                     } else {
@@ -49,7 +49,7 @@ const Email = () => {
 
     return (
         <Container maxWidth="sm">
-            {(!success) ? <Box sx={{ my: 4 }}>
+            <Box sx={{ my: 4 }}>
                 <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', }}>
                     Welcome to your ultimate news hub!
                 </Typography>
@@ -103,12 +103,10 @@ const Email = () => {
                     </Grid>
 
                 </Grid>
-            </Box> : null}
-
+            </Box>
             <Box sx={{ my: 4 }}>
-                {success ? <SuccessfullEmailSubmitAlert /> : null}
-                {(maxAttemptError && !success) ? <TooManyEmailSubmitAlert /> : null}
-                {(generalError && !success) ? <UnknownErrorAlert /> : null}
+                {(maxAttemptError) ? <TooManyEmailSubmitAlert /> : null}
+                {(generalError) ? <UnknownErrorAlert /> : null}
             </Box>
         </Container >
     )
