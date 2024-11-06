@@ -63,17 +63,27 @@ const Email = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    Welcome to Your Personal News Brew!
+                <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{ fontWeight: 'bold', textAlign: 'center' }}
+                >
+                    Your Personal News Brew!
                 </Typography>
+
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Get the latest news straight to your inbox—tailored to your interests and schedule.
+                    Receive the latest news directly in your inbox, customized to your interests and schedule.
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
                     <ul>
-                        <li><strong>Register with Us:</strong> Sign up in seconds to start building your personalized news feed.</li>
-                        <li><strong>Confirm Your Email:</strong> Verify your email and get ready for updates you care about.</li>
-                        <li><strong>Pick Your Sources & Schedule:</strong> Choose from trusted sources and decide when you’d like to receive your updates.
+                        <li>
+                            <strong>Register with Us:</strong> Sign up in seconds to start building your personalized news feed.
+                        </li>
+                        <li>
+                            <strong>Confirm Your Email:</strong> Verify your email to start receiving the updates you care about.
+                        </li>
+                        <li>
+                            <strong>Pick Your Sources & Schedule:</strong> Choose from trusted sources and decide when you’d like your updates to arrive.
                             <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2, mb: 2 }}>
                                 {sites.map((site, index) => (
                                     <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -82,12 +92,15 @@ const Email = () => {
                                 ))}
                             </Box>
                             <Typography variant="body1" sx={{ mb: 3 }}>
-                                And more are getting added every day!
+                                <span style={{ fontWeight: 'bold', color: 'primary.main' }}>And more are being added every day!</span>
                             </Typography>
                         </li>
-                        <li><strong>Voila!</strong> Stay informed without the noise—your custom news digest, delivered right when you need it.</li>
+                        <li>
+                            <strong>Voila!</strong> Stay informed without the noise—your custom news digest, delivered right when you need it.
+                        </li>
                     </ul>
                 </Typography>
+
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12 }} >
                         <TextField
