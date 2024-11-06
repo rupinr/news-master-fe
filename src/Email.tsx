@@ -10,11 +10,13 @@ import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from 'react-router-dom'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect } from 'react';
 import { getTopSites } from './service/service';
-import Chip from '@mui/material/Chip';
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import PublicIcon from '@mui/icons-material/Public'; // Y
 
 import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
 
@@ -85,11 +87,15 @@ const Email = () => {
                         <li>
                             <strong>Pick Your Sources & Schedule:</strong> Choose from trusted sources and decide when you’d like your updates to arrive.
                             <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2, mb: 2 }}>
-                                {sites.map((site, index) => (
-                                    <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography>{site.name}</Typography>
-                                    </Box>
-                                ))}
+                                <List>
+                                    {sites.map((site, index) => (
+                                        <ListItem key={index} sx={{ display: 'flex', alignItems: 'center', pl: 0 }}>
+                                            <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                                                <PublicIcon color="primary" />
+                                            </ListItemIcon>
+                                            <ListItemText primary={site.name} />
+                                        </ListItem>))}
+                                </List>
                             </Box>
                             <Typography variant="body1" sx={{ mb: 3 }}>
                                 <span style={{ fontWeight: 'bold', color: 'primary.main' }}>And more are being added every day!</span>
