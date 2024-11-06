@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect } from 'react';
 import { getTopSites } from './service/service';
+import Chip from '@mui/material/Chip';
 
 
 import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
@@ -66,7 +67,7 @@ const Email = () => {
                     Welcome to Your Personal News Brew!
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Stay informed with our curated newsletter service, bringing you the latest from both international and local news sources.
+                    Stay informed with our curated newsletter service, bringing you the latest from a variety of news sources.
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
                     Here are some of the sites we support:
@@ -79,17 +80,14 @@ const Email = () => {
                         </Box>
                     ))}
                 </Box>
-                <Typography variant="body1" sx={{ mb: 4 }}>
-                    And more are getting added every day!
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 4 }}>
-                    Provide your email to customize your news sources and delivery schedule.
-                </Typography>
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                    Your News, Your Schedule, Your Way.
-                </Typography>
+                <Chip
+                    label="And more are getting added every day!"
+                    color="primary"
+                    variant="outlined"
+                    sx={{ mb: 4 }}
+                />
                 <Grid container spacing={2} alignItems="center">
-                    <Grid size={{ xs: 12 }}>
+                    <Grid size={{ xs: 12 }} >
                         <TextField
                             autoComplete="email"
                             autoFocus
@@ -104,10 +102,14 @@ const Email = () => {
                             value={email}
                             onChange={handleChange}
                             onPaste={handleChange}
-                            sx={{ width: '100%', border: '1px solid #ccc', borderRadius: '4px' }}
+                            sx={{
+                                width: '100%',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px'
+                            }}
                         />
                     </Grid>
-                    <Grid size={{ xs: 12 }}>
+                    <Grid size={{ xs: 12 }} >
                         <FormControlLabel sx={{ width: '100%' }}
                             control={
                                 <Checkbox
@@ -128,14 +130,18 @@ const Email = () => {
                             Send Email
                         </Button>
                     </Grid>
-
                 </Grid>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+                        Your News, Your Schedule, Your Way.
+                    </Typography>
+                </Box>
             </Box>
             <Box sx={{ my: 4 }}>
-                {(maxAttemptError) ? <TooManyEmailSubmitAlert /> : null}
-                {(generalError) ? <UnknownErrorAlert /> : null}
+                {maxAttemptError && <TooManyEmailSubmitAlert />}
+                {generalError && <UnknownErrorAlert />}
             </Box>
-        </Container >
+        </Container>
     )
 }
 
