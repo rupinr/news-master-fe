@@ -67,25 +67,27 @@ const Email = () => {
                     Welcome to Your Personal News Brew!
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Stay informed with our curated newsletter service, bringing you the latest from a variety of news sources.
+                    Get the latest news straight to your inbox—tailored to your interests and schedule.
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Here are some of the sites we support:
+                    <ul>
+                        <li><strong>Register with Us:</strong> Sign up in seconds to start building your personalized news feed.</li>
+                        <li><strong>Confirm Your Email:</strong> Verify your email and get ready for updates you care about.</li>
+                        <li><strong>Pick Your Sources & Schedule:</strong> Choose from trusted sources and decide when you’d like to receive your updates.
+                            <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2, mb: 2 }}>
+                                {sites.map((site, index) => (
+                                    <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography>{site.name}</Typography>
+                                    </Box>
+                                ))}
+                            </Box>
+                            <Typography variant="body1" sx={{ mb: 3 }}>
+                                And more are getting added every day!
+                            </Typography>
+                        </li>
+                        <li><strong>Voila!</strong> Stay informed without the noise—your custom news digest, delivered right when you need it.</li>
+                    </ul>
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 4 }}>
-                    {sites.map((site, index) => (
-                        <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                            <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                            <Typography>{site.name}</Typography>
-                        </Box>
-                    ))}
-                </Box>
-                <Chip
-                    label="And more are getting added every day!"
-                    color="primary"
-                    variant="outlined"
-                    sx={{ mb: 4 }}
-                />
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12 }} >
                         <TextField
