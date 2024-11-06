@@ -50,17 +50,20 @@ const Email = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', }}>
-                    Welcome to your ultimate news hub!
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
+                    Welcome to Your Personal News Brew!
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Dive into a world of information with our personalized newsletter service, crafted just for you.
+                    Stay informed with our curated newsletter service, bringing you the latest from both international and local news sources.
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 4, }}>
-                    Enter your email address to start a subscription or update your subscription preferences.
+                <Typography variant="body1" sx={{ mb: 4 }}>
+                    It's simple to get started. Just provide us with your email address, and we'll guide you through setting up your personalized news feed.
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 4 }}>
+                    Once your email is verified, you'll have the freedom to choose your favorite news sources and decide when you want to receive your updates.
                 </Typography>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                    Your news, your way, every day.
+                    Your News, Your Schedule, Your Way.
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12, sm: 8 }}>
