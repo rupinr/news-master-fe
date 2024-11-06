@@ -103,8 +103,6 @@ const Email = () => {
                             onChange={handleChange}
                             onPaste={handleChange}
                             sx={{
-                                width: '100%',
-                                border: '1px solid #ccc',
                                 borderRadius: '4px'
                             }}
                         />
@@ -125,7 +123,7 @@ const Email = () => {
                             }
                         />
                     </Grid>
-                    <Grid size={{ xs: 12, sm: 4 }}>
+                    <Grid size={{ xs: 4.8, sm: 3 }} sx={{ marginLeft: 'auto', display: 'flex', justifyContent: { xs: 'center', sm: 'flex-end' }, alignItems: 'flex-end' }}>
                         <Button variant="contained" disabled={!consent || !isEmailValid} startIcon={<SendIcon />} onClick={handleClick} fullWidth>
                             Send Email
                         </Button>
