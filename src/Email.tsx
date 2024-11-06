@@ -10,6 +10,7 @@ import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from 'react-router-dom'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
 import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
@@ -56,17 +57,48 @@ const Email = () => {
                 <Typography variant="body1" sx={{ mb: 3 }}>
                     Stay informed with our curated newsletter service, bringing you the latest from both international and local news sources.
                 </Typography>
+                <Typography variant="body1" sx={{ mb: 3 }}>
+                    Currently, we support the following news sources:
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 4 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇬🇧 BBC (English)</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇩🇪 DW (English)</Typography>
+                    </Box> <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇮🇳 Manorama (Malayalam)</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇺🇸 The New York Times (English)</Typography>
+                    </Box> <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇩🇪 Euronews(German)</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇺🇸 Insider (English)</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                        <Typography>🇮🇳 NEWS 18 (English)</Typography>
+                    </Box>
+                </Box>
                 <Typography variant="body1" sx={{ mb: 4 }}>
-                    It's simple to get started. Just provide us with your email address, and we'll guide you through setting up your personalized news feed.
+                    And more are getting added every day!
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 4 }}>
-                    Once your email is verified, you'll have the freedom to choose your favorite news sources and decide when you want to receive your updates.
+                    Provide your email to customize your news sources and delivery schedule.
                 </Typography>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
                     Your News, Your Schedule, Your Way.
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
-                    <Grid size={{ xs: 12, sm: 8 }}>
+                    <Grid size={{ xs: 12 }}>
                         <TextField
                             autoComplete="email"
                             autoFocus
@@ -77,10 +109,11 @@ const Email = () => {
                             label="Email Address"
                             type="email"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                             value={email}
                             onChange={handleChange}
                             onPaste={handleChange}
+                            sx={{ width: '100%', border: '1px solid #ccc', borderRadius: '4px' }}
                         />
                     </Grid>
                     <Grid size={{ xs: 12 }}>
