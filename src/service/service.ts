@@ -92,6 +92,16 @@ export const getSites = async (token: string): Promise<ApiResponse<Site[]>> => {
     }
 };
 
+export const getTopSites = async (): Promise<ApiResponse<Site[]>> => {
+    try {
+        const response = await axios.get(`${SERVER_BASE_URL}/sites/top`);
+        return { success: true, data: response.data, error: '', status: 200 };
+    } catch (error: any) {
+        console.error('Error getting sites:', error);
+        return { success: false, data: [], error: error.message, status: error.status };
+    }
+};
+
 export const updatePreference = async (data: SubscriptionData, token: string): Promise<ApiResponse<SubscriptionData>> => {
     try {
         const response = await axios.post<SubscriptionData>(`${SERVER_BASE_URL}/subscribe`, data, { headers: { 'Authorization': token } });

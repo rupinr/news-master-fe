@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
-import { createUser } from './service/service'
+import { createUser, Site } from './service/service'
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Typography';
@@ -11,12 +11,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from 'react-router-dom'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useEffect } from 'react';
+import { getTopSites } from './service/service';
 
 
 import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
 
 const Email = () => {
     const [email, setEmail] = useState('')
+    const [sites, setSites] = useState<Site[]>([])
     const [isEmailValid, setIsEmailValid] = useState(false);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const [maxAttemptError, setMaxAttemptError] = useState(false)
@@ -30,6 +33,14 @@ const Email = () => {
         setEmail(event.target.value)
         setIsEmailValid(emailRegex.test(event.target.value));
     }
+
+
+    useEffect(() => {
+        getTopSites().then(response => {
+            setSites(response.data)
+        })
+    }, []);
+
 
     const handleClick = () => {
         if (isEmailValid) {
@@ -58,35 +69,15 @@ const Email = () => {
                     Stay informed with our curated newsletter service, bringing you the latest from both international and local news sources.
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Currently, we support the following news sources:
+                    Here are some of the sites we support:
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 4 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇬🇧 BBC (English)</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇩🇪 DW (English)</Typography>
-                    </Box> <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇮🇳 Manorama (Malayalam)</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇺🇸 The New York Times (English)</Typography>
-                    </Box> <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇩🇪 Euronews(German)</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇺🇸 Insider (English)</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
-                        <Typography>🇮🇳 NEWS 18 (English)</Typography>
-                    </Box>
+                    {sites.map((site, index) => (
+                        <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                            <CheckCircleIcon sx={{ color: 'primary.main', mr: 1 }} />
+                            <Typography>{site.name}</Typography>
+                        </Box>
+                    ))}
                 </Box>
                 <Typography variant="body1" sx={{ mb: 4 }}>
                     And more are getting added every day!
