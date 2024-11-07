@@ -16,8 +16,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import PublicIcon from '@mui/icons-material/Public'; // Y
-
+import PublicIcon from '@mui/icons-material/Public';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { TooManyEmailSubmitAlert, UnknownErrorAlert } from './Alerts';
 
 const Email = () => {
@@ -68,50 +68,61 @@ const Email = () => {
                 <Typography
                     variant="h4"
                     gutterBottom
-                    sx={{ fontWeight: 'bold', textAlign: 'center' }}
-                >
+                    sx={{ fontWeight: 'bold', textAlign: 'center' }}>
                     Your Personal News Brew!
                 </Typography>
-
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                    Receive the latest news directly in your inbox, customized to your interests and schedule.
+                    QuickBrew.News is your personalized news subscription service. We deliver the latest news directly to your inbox, tailored to your interests and schedule. Stay informed without the noise and make sure you never miss out on what's important to you.
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 3 }}>
-                    <ul>
-                        <li>
-                            <strong>Register with Us:</strong> Sign up in seconds to start building your personalized news feed.
-                        </li>
-                        <li>
-                            <strong>Confirm Your Email:</strong> Verify your email to start receiving the updates you care about.
-                        </li>
-                        <li>
-                            <strong>Pick Your Sources & Schedule:</strong> Choose from trusted sources and decide when you’d like your updates to arrive.
-                            <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2, mb: 2 }}>
-                                <List>
-                                    {sites.map((site, index) => (
-                                        <ListItem key={index} sx={{ display: 'flex', alignItems: 'center', pl: 0 }}>
-                                            <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
-                                                <PublicIcon color="primary" />
-                                            </ListItemIcon>
-                                            <ListItemText primary={site.name} />
-                                        </ListItem>))}
-                                </List>
-                            </Box>
-                            <Typography variant="body1" sx={{ mb: 3 }}>
-                                <span style={{ fontWeight: 'bold', color: 'primary.main' }}>And more are being added every day!</span>
+                <Typography variant="body1" sx={{ mb: 1 }}>
+                    Here's how it works:
+                </Typography>
+                <List sx={{ textAlign: 'left', mx: 'auto', maxWidth: 'sm' }}>
+                    <ListItem>
+                        <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                            <ArrowForwardIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary={<span><strong>Enter</strong> your email to sign up</span>} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                            <ArrowForwardIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary={<span><strong>Activate</strong> your subscription by clicking the link in the email</span>} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                            <ArrowForwardIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary={<span><strong>Customize</strong> your delivery preferences and news sources</span>} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                            <ArrowForwardIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary={<span><strong>Choose</strong> from a variety of sources including:</span>} />
+                    </ListItem>
+                    <ListItem>
+                        <List sx={{ p: 0, pl: 4 }}> {sites.map((site, index) => (<ListItem key={index} sx={{ display: 'flex', alignItems: 'center', pl: 0 }}>
+                            <ListItemIcon sx={{ minWidth: 'auto', mr: 1 }}>
+                                <PublicIcon color="primary" />
+                            </ListItemIcon>
+                            <ListItemText primary={site.name} />
+                        </ListItem>))}
+                            <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                                And more are being added frequently!
                             </Typography>
-                        </li>
-                        <li>
-                            <strong>Voila!</strong> Stay informed without the noise—your custom news digest, delivered right when you need it.
-                        </li>
-                    </ul>
-                </Typography>
+                        </List>
+                    </ListItem>
 
+                </List>
+                <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.main', mt: 3 }}>
+                    Get Started!
+                </Typography>
                 <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 12 }} >
                         <TextField
                             autoComplete="email"
-                            autoFocus
                             required
                             margin="dense"
                             id="name"
