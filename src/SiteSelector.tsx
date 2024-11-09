@@ -23,7 +23,7 @@ const SiteSelector: React.FC<SiteSelectorProps> = ({ options, defaultOptions, on
         setSelectedOptions(defaultOptions);
     }, [defaultOptions, options]);
 
-    const handleUpdate = (event: any, newValue: Option[]) => {
+    const handleUpdate = (_event: React.SyntheticEvent, newValue: Option[]) => {
         const deletedOne = selectedOptions.filter(item => !newValue.includes(item));
         if (deletedOne.length == 1) {
             setAllOptions(Array.from(new Set([...allOptions, deletedOne[0]])))

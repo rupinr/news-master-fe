@@ -32,15 +32,24 @@ const Email = () => {
     const navigate = useNavigate()
 
 
-    const handleChange = (event: any) => {
-        setEmail(event.target.value)
-        setIsEmailValid(emailRegex.test(event.target.value));
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        handleEmail(event.target.value)
+        event.preventDefault();
     }
 
+    const handlePaste: React.ClipboardEventHandler<HTMLDivElement> = (event) => {
+        handleEmail(event.clipboardData.getData("text/plain"))
+        event.preventDefault();
+    }
+
+    const handleEmail = (email: string) => {
+        setEmail(email)
+        setIsEmailValid(emailRegex.test(email));
+    }
 
     useEffect(() => {
         getTopSites().then(response => {
-            setSites(response.data)
+            setSites(response.data!)
         })
     }, []);
 
@@ -133,7 +142,7 @@ const Email = () => {
                             variant="outlined"
                             value={email}
                             onChange={handleChange}
-                            onPaste={handleChange}
+                            onPaste={handlePaste}
                             sx={{
                                 borderRadius: '4px'
                             }}
@@ -161,15 +170,15 @@ const Email = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                        Your News, Your Schedule, Your Way.
-                    </Typography>
-                </Box>
             </Box>
             <Box sx={{ my: 4 }}>
                 {maxAttemptError && <TooManyEmailSubmitAlert />}
                 {generalError && <UnknownErrorAlert />}
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+                    Your News, Your Schedule, Your Way.
+                </Typography>
             </Box>
         </Container>
     )

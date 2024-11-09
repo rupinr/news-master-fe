@@ -18,7 +18,7 @@ interface AppProps {
   darkTheme: boolean;
 }
 
-const App: React.FC<AppProps> = ({ handleThemeToggle, darkTheme }) => {
+const App: React.FC<AppProps> = ({ handleThemeToggle }) => {
   return (
     <Router>
       <Header />

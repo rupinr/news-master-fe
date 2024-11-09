@@ -53,17 +53,18 @@ export const Preference = () => {
 
         let allSites: Option[]
         getSites(token).then(response => {
-            allSites = response.data.map((item: Site) => ({
-                label: item.name,
-                value: item.url
-            }));
+            if (response.success && response.data != null) {
+                allSites = response.data.map((item: Site) => ({
+                    label: item.name,
+                    value: item.url
+                }));
+            }
         }).then(() => {
-            let existingSitePreference: Option[]
             getSubscription(token).then(response => {
-
-                if (response.success) {
+                let existingSitePreference: Option[]
+                if (response.success && response.data != null) {
                     existingSitePreference = response.data.sites.map(item => ({
-                        label: allSites.find((site: Option) => site.value === item)?.label!!,
+                        label: allSites.find((site: Option) => site.value === item)?.label || 'Unknwon Site',
                         value: item
                     }));
                     const filteredItems = allSites.filter(item =>
@@ -109,7 +110,7 @@ export const Preference = () => {
 
         const subscriptionData: SubscriptionData = {
             confirmed: true,
-            sites: selectedSites!!.map((item) => item.value),
+            sites: selectedSites.map((item) => item.value),
             subscriptionSchedule: {
                 dailyFrequency: {
                     monday: daySelection['monday'],

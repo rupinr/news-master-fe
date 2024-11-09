@@ -30,7 +30,7 @@ export interface CreateUserPayload {
 
 export interface Site {
     url: string;
-    name: string
+    name: string;
 }
 
 export interface FeedbackData {
@@ -39,86 +39,79 @@ export interface FeedbackData {
 
 interface ApiResponse<T> {
     success: boolean;
-    data: T
+    data: T | null;
+    status: number | null;
     error: string;
-    status: number;
 }
 
-const defaultSubscriptionData: SubscriptionData = {
-    confirmed: false,
-    sites: [],
-    subscriptionSchedule: {
-        dailyFrequency: {
-            monday: false,
-            tuesday: false,
-            wednesday: false,
-            thursday: false,
-            friday: false,
-            saturday: false,
-            sunday: false,
-        },
-        timeSlot: '',
-        timezone: ''
+const handleError = <T>(error: unknown): ApiResponse<T> => {
+    let errorMessage = 'An unexpected error occurred';
+    let errorStatus: number | null = null;
+
+    if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data.message || error.message;
+        errorStatus = error.response.status;
+    } else if (error instanceof Error) {
+        errorMessage = error.message;
+    }
+
+    console.error(errorMessage);
+
+    return { success: false, data: null, error: errorMessage, status: errorStatus };
+};
+
+
+export const cancelSubscription = async (token: string): Promise<ApiResponse<null>> => {
+    try {
+        const response = await axios.post<null>(`${SERVER_BASE_URL}/cancel`, { confirmed: false }, { headers: { Authorization: token } });
+        return { success: true, data: response.data, status: response.status, error: '' };
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
-export const cancelSubscription = async (token: string): Promise<ApiResponse<any>> => {
+export const createUser = async (data: CreateUserPayload): Promise<ApiResponse<CreateUserPayload>> => {
     try {
-        const response = await axios.post<any>(`${SERVER_BASE_URL}/cancel`, { confirmed: false }, { headers: { 'Authorization': token } });
+        const response = await axios.post<CreateUserPayload>(`${SERVER_BASE_URL}/user`, data);
         return { success: true, data: response.data, status: response.status, error: '' };
-    } catch (error: any) {
-        console.error('Error canelling subscription:', error);
-        return { success: false, data: null, error: error.message, status: error.status };
-    }
-};
-
-export const createUser = async (data: CreateUserPayload): Promise<ApiResponse<any>> => {
-    try {
-        const response = await axios.post<any>(`${SERVER_BASE_URL}/user`, data);
-        return { success: true, data: response.data, status: response.status, error: '' };
-    } catch (error: any) {
-        console.error('Error creating user:', error);
-        return { success: false, data: null, error: error.message, status: error.status };
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
 export const getSites = async (token: string): Promise<ApiResponse<Site[]>> => {
     try {
-        const response = await axios.get(`${SERVER_BASE_URL}/sites`, { headers: { Authorization: token } });
-        return { success: true, data: response.data, error: '', status: 200 };
-    } catch (error: any) {
-        console.error('Error getting sites:', error);
-        return { success: false, data: [], error: error.message, status: error.status };
+        const response = await axios.get<Site[]>(`${SERVER_BASE_URL}/sites`, { headers: { Authorization: token } });
+        return { success: true, data: response.data, error: '', status: response.status };
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
 export const getTopSites = async (): Promise<ApiResponse<Site[]>> => {
     try {
-        const response = await axios.get(`${SERVER_BASE_URL}/sites/top`);
-        return { success: true, data: response.data, error: '', status: 200 };
-    } catch (error: any) {
-        console.error('Error getting sites:', error);
-        return { success: false, data: [], error: error.message, status: error.status };
+        const response = await axios.get<Site[]>(`${SERVER_BASE_URL}/sites/top`);
+        return { success: true, data: response.data, error: '', status: response.status };
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
 export const updatePreference = async (data: SubscriptionData, token: string): Promise<ApiResponse<SubscriptionData>> => {
     try {
-        const response = await axios.post<SubscriptionData>(`${SERVER_BASE_URL}/subscribe`, data, { headers: { 'Authorization': token } });
+        const response = await axios.post<SubscriptionData>(`${SERVER_BASE_URL}/subscribe`, data, { headers: { Authorization: token } });
         return { success: true, data: response.data, status: response.status, error: '' };
-    } catch (error: any) {
-        console.error('Error updating preference:', error);
-        return { success: false, data: defaultSubscriptionData, error: error.message, status: error.status }; // Returning default data
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
-export const submitFeedback = async (data: FeedbackData): Promise<ApiResponse<any>> => {
+export const submitFeedback = async (data: FeedbackData): Promise<ApiResponse<FeedbackData>> => {
     try {
         const response = await axios.post<FeedbackData>(`${SERVER_BASE_URL}/feedback`, data);
         return { success: true, data: response.data, status: response.status, error: '' };
-    } catch (error: any) {
-        console.error('Error submitting feedback:', error);
-        return { success: false, data: null, error: error.message, status: error.status };
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
 
@@ -126,8 +119,7 @@ export const getSubscription = async (token: string): Promise<ApiResponse<Subscr
     try {
         const response = await axios.get<SubscriptionData>(`${SERVER_BASE_URL}/subscription`, { headers: { Authorization: token } });
         return { success: true, data: response.data, status: response.status, error: '' };
-    } catch (error: any) {
-        console.error('Error fetching subscription data:', error);
-        return { success: false, data: defaultSubscriptionData, error: error.message, status: error.status }; // Returning default data
+    } catch (error: unknown) {
+        return handleError(error);
     }
 };
